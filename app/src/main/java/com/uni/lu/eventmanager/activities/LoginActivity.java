@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
 	}
 
 	private void goToListPage() {
-		Intent home = new Intent(LoginActivity.this, HomeActivity.class);
+		Intent home = new Intent(LoginActivity.this, ProfileActivity.class);
 		startActivity(home);
 		finish();
 	}

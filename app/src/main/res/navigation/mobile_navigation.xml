@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_events">
+
+    <fragment
+        android:id="@+id/nav_events"
+        android:name="com.uni.lu.eventmanager.activities.fragments.EventsFragment"
+        android:label="@string/menu_events"
+        tools:layout="@layout/fragment_events" />
+
+    <fragment
+        android:id="@+id/nav_add_event"
+        android:name="com.uni.lu.eventmanager.activities.fragments.AddEventsFragment"
+        android:label="@string/menu_add_event"
+        tools:layout="@layout/fragment_add_event" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.uni.lu.eventmanager.activities.fragments.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" />
+
+</navigation>
+
