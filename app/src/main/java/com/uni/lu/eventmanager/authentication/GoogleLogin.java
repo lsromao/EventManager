@@ -17,7 +17,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.uni.lu.eventmanager.activities.HomeActivity;
+import com.uni.lu.eventmanager.activities.ProfileActivity;
 import com.uni.lu.eventmanager.controller.FirebaseController;
 import com.uni.lu.eventmanager.controller.LoginCodes;
 
@@ -72,7 +72,7 @@ public class GoogleLogin {
 	}
 
 	private void goToListPage() {
-		Intent goToListPage = new Intent(activity, HomeActivity.class);
+		Intent goToListPage = new Intent(activity, ProfileActivity.class);
 		activity.startActivity(goToListPage);
 		activity.finish();
 	}

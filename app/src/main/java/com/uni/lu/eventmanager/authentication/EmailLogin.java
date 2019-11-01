@@ -12,7 +12,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.uni.lu.eventmanager.activities.HomeActivity;
+import com.uni.lu.eventmanager.activities.ProfileActivity;
 import com.uni.lu.eventmanager.controller.FirebaseController;
 import com.uni.lu.eventmanager.controller.LoginCodes;
 
@@ -102,7 +102,7 @@ public class EmailLogin {
 	}
 
 	private void goToListPage() {
-		Intent goToListPage = new Intent(activity, HomeActivity.class);
+		Intent goToListPage = new Intent(activity, ProfileActivity.class);
 		activity.startActivity(goToListPage);
 		activity.finish();
 	}
