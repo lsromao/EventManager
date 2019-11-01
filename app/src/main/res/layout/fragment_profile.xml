@@ -18,16 +18,151 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="155dp"
-        android:layout_height="161dp"
-        android:layout_marginTop="96dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.156"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.004"
-        app:srcCompat="@android:color/background_dark" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="20dp">
+
+        <RelativeLayout
+            style="@style/profileDetailsLayout"
+            android:layout_height="186dp">
+
+            <ImageView
+                android:id="@+id/profilePicture"
+                style="@style/profileDetailsImage"
+                android:layout_width="215dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="91dp"
+                android:layout_marginEnd="105dp"
+                android:gravity="center_vertical|center_horizontal|center"
+                android:scaleType="center" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/profileDetailsLayout"
+            android:layout_height="39dp">
+
+            <ImageView
+                android:id="@+id/nameImageView"
+                style="@style/profileDetailsImage"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_identification" />
+
+            <TextView
+                android:id="@+id/profileUserName"
+                style="@style/profileDetailsMiniText"
+                android:layout_width="219dp"
+                android:layout_height="24dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@id/nameImageView"
+                android:text="developer" />
+
+        </RelativeLayout>
+
+        <View style="@style/proifleDetailsView" />
+
+        <RelativeLayout
+            style="@style/profileDetailsLayout"
+            android:layout_height="30dp">
+
+            <ImageView
+                android:id="@+id/mobileImageView"
+                style="@style/profileDetailsImage"
+                android:src="@drawable/ic_mobile_phone" />
+
+            <TextView
+                android:id="@+id/profileMobile"
+                style="@style/profileDetailsMiniText"
+                android:layout_marginLeft="62dp"
+                android:layout_marginTop="6dp"
+                android:text="+91-8129999999" />
+
+        </RelativeLayout>
+
+        <View style="@style/proifleDetailsView" />
+
+        <RelativeLayout
+            style="@style/profileDetailsLayout"
+            android:layout_height="30dp">
+
+            <ImageView
+                android:id="@+id/emailImageView"
+                style="@style/profileDetailsImage"
+                android:layout_width="27dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_email" />
+
+            <TextView
+                android:id="@+id/profileEmail"
+                style="@style/profileDetailsMiniText"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="19dp"
+                android:layout_marginTop="4dp"
+                android:layout_toRightOf="@id/emailImageView"
+                android:text="developer@appsnipp.com" />
+
+        </RelativeLayout>
+
+        <View style="@style/proifleDetailsView" />
+
+        <RelativeLayout
+            style="@style/profileDetailsLayout"
+            android:layout_height="33dp">
+
+            <ImageView
+                android:id="@+id/addressImageView"
+                style="@style/profileDetailsImage"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_address" />
+
+            <TextView
+                android:id="@+id/profileAddress"
+                style="@style/profileDetailsMiniText"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="6dp"
+                android:layout_toRightOf="@id/addressImageView"
+                android:text="Avenue 2nd Street NW SY." />
+
+        </RelativeLayout>
+
+        <View
+            style="@style/proifleDetailsView"
+            android:layout_height="19dp" />
+
+        <RelativeLayout
+            style="@style/profileDetailsLayout"
+            android:layout_height="36dp">
+
+            <ImageView
+                android:id="@+id/dobImageView"
+                style="@style/profileDetailsImage"
+                android:src="@drawable/ic_birthday" />
+
+            <TextView
+                android:id="@+id/profileDate"
+                style="@style/profileDetailsMiniText"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="29dp"
+                android:layout_marginTop="6dp"
+                android:layout_toRightOf="@id/dobImageView"
+                android:text="12-05-1990" />
+
+        </RelativeLayout>
+
+        <View
+            style="@style/proifleDetailsView"
+            android:layout_height="209dp" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
