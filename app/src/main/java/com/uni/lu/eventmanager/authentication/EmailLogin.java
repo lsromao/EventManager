@@ -103,6 +103,7 @@ public class EmailLogin {
 
 	private void goToListPage() {
 		Intent goToListPage = new Intent(activity, ProfileActivity.class);
+		goToListPage.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		activity.startActivity(goToListPage);
 		activity.finish();
 	}

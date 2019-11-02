@@ -89,6 +89,8 @@ public class ProfileActivity extends AppCompatActivity {
 		}
 
 		Intent home = new Intent(ProfileActivity.this, LoginActivity.class);
+		home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		home.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		startActivity(home);
 		finish();
 	}
