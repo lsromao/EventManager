@@ -20,14 +20,14 @@ import com.uni.lu.eventmanager.controller.LoginCodes;
 
 public class LoginActivity extends AppCompatActivity {
 
-	private ImageView    mBtnGoogleLogin;
-	private Button mBtnLogin;
+	private ImageView mBtnGoogleLogin;
+	private Button    mBtnLogin;
 	private TextView  mBtnRegister;
 	private TextView  email;
 	private TextView  password;
 
-	private GoogleLogin  googleLogin;
-	private EmailLogin   emailLogin;
+	private GoogleLogin googleLogin;
+	private EmailLogin  emailLogin;
 
 
 	@Override
@@ -43,13 +43,6 @@ public class LoginActivity extends AppCompatActivity {
 		email = findViewById(R.id.email);
 		password = findViewById(R.id.password);
 
-		mBtnRegister.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
-				startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
-				overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
-			}
-		});
-
 		mBtnGoogleLogin.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				googleLogin = new GoogleLogin(LoginActivity.this, getString(R.string.default_web_client_id));
@@ -60,6 +53,12 @@ public class LoginActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				emailLogin = new EmailLogin(LoginActivity.this);
 				emailLogin.signInEmail();
+			}
+		});
+		mBtnRegister.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+				overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
 			}
 		});
 	}
@@ -90,11 +89,6 @@ public class LoginActivity extends AppCompatActivity {
 		Intent home = new Intent(LoginActivity.this, ProfileActivity.class);
 		home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		startActivity(home);
-	}
-
-	public void onClick(View v) {
-		startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
-		overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
 	}
 }
 

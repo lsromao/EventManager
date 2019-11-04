@@ -18,50 +18,56 @@
         android:layout_alignParentLeft="true"
         android:layout_centerInParent="true"
         android:paddingTop="20dp">
+
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="20dp">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true"
                     style="@style/viewParent.headerText.NoMode"
-                    android:text="Already \nhave an \nAccount?"/>
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="Already \nhave an \nAccount?" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_register_hero"
                     android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"/>
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_register_hero" />
             </RelativeLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputEmail"
                 style="@style/parent"
                 android:layout_marginTop="@dimen/loginViewsMargin">
+
                 <EditText
                     android:id="@+id/email"
                     style="@style/modifiedEditText"
+                    android:hint="@string/login_email_hint"
                     android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:hint="@string/login_email_hint"/>
+                    android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputPassword"
                 style="@style/parent"
                 android:layout_marginTop="@dimen/loginViewsMargin">
+
                 <EditText
                     android:id="@+id/password"
                     style="@style/modifiedEditText"
                     android:hint="@string/login_password_hint"
-                    android:maxLines="1"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -77,13 +83,13 @@
             <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
                 android:id="@+id/btnLogin"
                 style="@style/loginButton"
-                app:spinning_bar_width="4dp"
-                app:spinning_bar_color="#FFF"
-                android:text="Login"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/loginViewsMargin"
+                android:text="Login"
+                app:initialCornerAngle="27dp"
+                app:spinning_bar_color="#FFF"
                 app:spinning_bar_padding="6dp"
-                app:initialCornerAngle="27dp"/>
+                app:spinning_bar_width="4dp" />
 
             <ProgressBar
                 android:id="@+id/loading"
@@ -109,38 +115,36 @@
                 android:textAlignment="center"
                 android:textColor="@color/themeColor"
                 android:textSize="17sp"
-                android:textStyle="bold"
-                android:onClick="onClick"
-                android:clickable="true"/>
+                android:textStyle="bold" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="12"
+                android:layout_marginTop="30dp"
                 android:gravity="center"
-                android:layout_marginTop="30dp">
+                android:weightSum="12">
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="1dp"
-                    android:background="@color/colorPrimaryDark"
-                    android:layout_weight="3"/>
+                    android:layout_weight="3"
+                    android:background="@color/colorPrimaryDark" />
 
                 <TextView
                     style="@style/viewParent.headerText.NoMode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Use other Methods"
                     android:layout_weight="6"
-                    android:textSize="12sp"
-                    android:textAlignment="center"/>
+                    android:text="Use other Methods"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="1dp"
-                    android:background="@color/colorPrimaryDark"
-                    android:layout_weight="3"/>
+                    android:layout_weight="3"
+                    android:background="@color/colorPrimaryDark" />
 
             </LinearLayout>
 
@@ -166,7 +170,6 @@
 
         </LinearLayout>
     </ScrollView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -153,19 +153,21 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/facebookLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="30dp">
+                android:gravity="center">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_facebook"/>
+                    android:src="@drawable/ic_facebook" />
 
                 <ImageView
-                    android:layout_width="51dp"
-                    android:layout_height="76dp"
+                    android:id="@+id/googleLogin"
+                    android:layout_width="53dp"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/ic_google_icon" />
             </LinearLayout>
