@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "1092952934738-nhf5qfi2c2oct0278qb8h4f8l07ud4f5.apps.googleusercontent.com",
+          "client_id": "1092952934738-47d7ejftk585ich3sj42sqbiang1q396.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.uni.lu.eventmanager",
-            "certificate_hash": "f49b38eef3e934c026b668967f3cdf2ee4caccb0"
+            "certificate_hash": "e1bdc8e4fcc778856d8ec93eda88809329f0311b"
           }
         },
         {

@@ -2,8 +2,10 @@ package com.uni.lu.eventmanager.authentication;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.uni.lu.eventmanager.R;
 import com.uni.lu.eventmanager.activities.ProfileActivity;
 import com.uni.lu.eventmanager.controller.FirebaseController;
 import com.uni.lu.eventmanager.controller.LoginCodes;
@@ -23,6 +28,7 @@ public class EmailLogin {
 	private static final String TAG = "Email Login";
 
 	private Activity activity;
+	private String userName;
 
 	public EmailLogin(Activity activity) {
 		this.activity = activity;
@@ -33,7 +39,7 @@ public class EmailLogin {
 		activity.startActivityForResult(signInEmail, LoginCodes.RC_SIGN_IN_EMAIL);
 	}
 
-	public void register() {
+	public void register(String s) {
 		Intent signInEmail = new Intent(activity.getIntent());
 		activity.startActivityForResult(signInEmail, LoginCodes.RC_SIGN_IN_CREATE);
 	}
@@ -46,6 +52,7 @@ public class EmailLogin {
 		}
 
 	}
+
 
 	private void loginWithEmail(String email, String password) {
 		if (validatePassword(password)){
@@ -76,6 +83,7 @@ public class EmailLogin {
 		}
 	}
 
+
 	private void createUser(String email, String password) {
 		if (validatePassword(password)){
 			if (validateEmail(email)) {
@@ -84,9 +92,24 @@ public class EmailLogin {
 							@Override
 							public void onComplete(@NonNull Task<AuthResult> task) {
 								if (task.isSuccessful()) {
+									// If Sign is success
 									Log.d(TAG, "signInWithEmail:success");
-									FirebaseController.getInstance().setmAuth(FirebaseAuth.getInstance());
-									goToListPage();
+									FirebaseUser user = FirebaseController.getInstance().getmAuth().getCurrentUser();
+									UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+											.setDisplayName(userName).build();
+
+									user.updateProfile(profileUpdates)
+											.addOnCompleteListener(new OnCompleteListener<Void>() {
+												@Override
+												public void onComplete(@NonNull Task<Void> task) {
+													if (task.isSuccessful()) {
+														Log.d(TAG, "User profile updated");
+													}
+												}
+											});
+
+//									FirebaseController.getInstance().setmAuth(FirebaseAuth.getInstance());
+//									goToListPage();
 								} else {
 									// If sign in fails, display a message to the user.
 									Log.w(TAG, "signInWithEmail:failure", task.getException());

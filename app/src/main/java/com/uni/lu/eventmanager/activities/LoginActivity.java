@@ -29,19 +29,21 @@ public class LoginActivity extends AppCompatActivity {
 	private GoogleLogin googleLogin;
 	private EmailLogin  emailLogin;
 
+	FirebaseAuth firebaseAuth;
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 
-		FirebaseController.getInstance().setmAuth(FirebaseAuth.getInstance());
-
 		mBtnGoogleLogin = findViewById(R.id.googleLogin);
 		mBtnRegister = findViewById(R.id.registerUser);
 		mBtnLogin = findViewById(R.id.btnLogin);
 		email = findViewById(R.id.email);
 		password = findViewById(R.id.password);
+
+		FirebaseController.getInstance().setmAuth(FirebaseAuth.getInstance());
+		firebaseAuth = FirebaseAuth.getInstance();
 
 		mBtnGoogleLogin.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -82,7 +84,6 @@ public class LoginActivity extends AppCompatActivity {
 		if (currentUser != null) {
 			goToListPage();
 		}
-
 	}
 
 	private void goToListPage() {
@@ -91,4 +92,3 @@ public class LoginActivity extends AppCompatActivity {
 		startActivity(home);
 	}
 }
-
