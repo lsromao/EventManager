@@ -11,6 +11,7 @@ public class EventsView extends ViewModel {
 	public EventsView() {
 		mText = new MutableLiveData<>();
 		mText.setValue("Event - List Page - List firt 5 events - need model");
+
 	}
 
 	public LiveData<String> getText() {
