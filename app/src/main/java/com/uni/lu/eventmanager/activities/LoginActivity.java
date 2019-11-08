@@ -89,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
 		Intent home = new Intent(LoginActivity.this, ProfileActivity.class);
 		home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		startActivity(home);
+		finish();
 	}
 }
 
