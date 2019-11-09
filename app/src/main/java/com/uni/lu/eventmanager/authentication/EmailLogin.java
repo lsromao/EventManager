@@ -109,7 +109,7 @@ public class EmailLogin {
 											});
 
 //									FirebaseController.getInstance().setmAuth(FirebaseAuth.getInstance());
-//									goToListPage();
+									goToListPage();
 								} else {
 									// If sign in fails, display a message to the user.
 									Log.w(TAG, "signInWithEmail:failure", task.getException());
