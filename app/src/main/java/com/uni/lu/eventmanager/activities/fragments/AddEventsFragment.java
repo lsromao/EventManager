@@ -1,7 +1,11 @@
 package com.uni.lu.eventmanager.activities.fragments;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,12 +22,18 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.shivtechs.maplocationpicker.LocationPickerActivity;
+import com.shivtechs.maplocationpicker.MapUtility;
 import com.uni.lu.eventmanager.R;
 import com.uni.lu.eventmanager.controller.FirebaseController;
 import com.uni.lu.eventmanager.model.EventModel;
@@ -37,11 +47,17 @@ public class AddEventsFragment extends Fragment {
 	private static final String TAG                  = "DB Event";
 	private static final int    GALLERY_REQUEST_CODE = 2;
 
+    private static final int LOC_REQ_CODE = 1;
+    private static final int ADDRESS_PICKER_REQUEST = 1020;
+    private final int PICK_IMAGE_REQUEST = 71;
+
 	private DateFormats      dtFormat;
 	private TimePickerDialog picker;
-
+	TextView location;
 	public View onCreateView(@NonNull LayoutInflater inflater,
 	                         ViewGroup container, Bundle savedInstanceState) {
+
+        MapUtility.apiKey = "AIzaSyDfXCxIe_vA2APaofzjGWi_9jKoFmXhE4I";
 
 		final View root = inflater.inflate(R.layout.fragment_add_event, container, false);
 
@@ -54,6 +70,14 @@ public class AddEventsFragment extends Fragment {
 		final TextView endTime     = root.findViewById(R.id.endTime);
 		Button         save        = root.findViewById(R.id.saveEvent);
 		final Spinner  categories  = root.findViewById(R.id.categories);
+		location    = root.findViewById(R.id.editLocation);
+		final Button button = root.findViewById(R.id.select_place);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getCurrentPlaceItems();
+            }
+        });
 
 		dtFormat = new DateFormats();
 
@@ -135,6 +159,8 @@ public class AddEventsFragment extends Fragment {
 		categories.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, Categories.CATEGORIES.values()));
 
 
+
+
 		save.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				String startDt = startDate.getText().toString();
@@ -144,6 +170,7 @@ public class AddEventsFragment extends Fragment {
 				String tt      = title.getText().toString();
 				String desc    = description.getText().toString();
 				String cat     = categories.getSelectedItem().toString();
+				String geo     = location.getText().toString();
 
 				if (tt.length() < 1) {
 					Toast.makeText(getActivity(), "Title cannot be empty!", Toast.LENGTH_SHORT).show();
@@ -177,6 +204,37 @@ public class AddEventsFragment extends Fragment {
 		return root;
 	}
 
+    private void getCurrentPlaceItems() {
+        if (isLocationAccessPermitted()) {
+            showPlacePicker();
+        } else {
+            requestLocationAccessPermission();
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private void showPlacePicker() {
+        Intent i = new Intent(getContext(), LocationPickerActivity.class);
+        startActivityForResult(i, ADDRESS_PICKER_REQUEST);
+
+    }
+
+    private boolean isLocationAccessPermitted() {
+        if (ContextCompat.checkSelfPermission(getContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void requestLocationAccessPermission() {
+        ActivityCompat.requestPermissions(getActivity(),
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                LOC_REQ_CODE);
+    }
+
 	private void createEvent(String title, String description, Date startTime, Date endTime, boolean privacy) {
 
 		dtFormat = new DateFormats();
@@ -184,7 +242,7 @@ public class AddEventsFragment extends Fragment {
 
 		String            id    = FirebaseController.getInstance().getmAuth().getCurrentUser().getUid();
 		FirebaseFirestore db    = FirebaseFirestore.getInstance();
-		EventModel        event = new EventModel(title, description, startTime, endTime, "test", true, id, "", "");
+		EventModel        event = new EventModel(title, description, startTime, endTime, location.getText().toString(), true, id, "", "");
 
 		db.collection("events")
 				.add(event)
@@ -204,4 +262,26 @@ public class AddEventsFragment extends Fragment {
 				});
 
 	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+		if (requestCode == ADDRESS_PICKER_REQUEST) {
+			try {
+				if (data != null && data.getStringExtra(MapUtility.ADDRESS) != null) {
+					String address = data.getStringExtra(MapUtility.ADDRESS);
+					double currentLatitude = data.getDoubleExtra(MapUtility.LATITUDE, 0.0);
+					double currentLongitude = data.getDoubleExtra(MapUtility.LONGITUDE, 0.0);
+					location.setText(address);
+//					eventLocation.setText(address);
+//					location = new EventLocation(address,currentLatitude,currentLongitude);
+
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+
 }

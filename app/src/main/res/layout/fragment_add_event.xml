@@ -89,25 +89,26 @@
         android:id="@+id/endTime"
         android:layout_width="184dp"
         android:layout_height="56dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="24dp"
         android:ems="10"
-        android:hint="End Time"
         android:focusableInTouchMode="false"
+        android:hint="End Time"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startTime" />
 
     <EditText
         android:id="@+id/editLocation"
-        android:layout_width="352dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="186dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Location"
         android:inputType="textPersonName"
         app:layout_constraintTop_toBottomOf="@+id/endTime"
-        tools:layout_editor_absoluteX="19dp" />
+        tools:layout_editor_absoluteX="181dp" />
 
     <EditText
         android:id="@+id/editDescription"
@@ -145,6 +146,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editDescription"
         app:layout_constraintVertical_bias="0.323" />
+
+    <Button
+        android:id="@+id/select_place"
+        android:layout_width="160dp"
+        android:layout_height="55dp"
+        android:text="Select"
+        tools:layout_editor_absoluteX="21dp"
+        tools:layout_editor_absoluteY="479dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
