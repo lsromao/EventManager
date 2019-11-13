@@ -35,4 +35,9 @@ public class EventsFragment extends Fragment {
 		});
 		return root;
 	}
+
+	private void saveInDB(){
+		// Use the application default credentials
+
+	}
 }
