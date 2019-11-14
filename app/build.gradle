@@ -12,7 +12,7 @@ android {
     defaultConfig {
         applicationId "com.uni.lu.eventmanager"
         minSdkVersion 24
-        targetSdkVersion 29
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -46,6 +46,18 @@ dependencies {
 
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'br.com.simplepass:loading-button-android:1.14.0'
+    implementation 'com.google.firebase:firebase-firestore:21.2.1'
+    implementation 'com.google.firebase:firebase-storage:19.1.0'
+
+    implementation 'com.google.android.libraries.places:places:2.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
+    implementation 'com.github.shivpujan12:LocationPicker:v1.2'
+    implementation "com.google.android.gms:play-services-location:17.0.0"
+
+    implementation 'com.google.android.gms:play-services-plus:17.0.0'
+
+
 
     implementation 'com.google.firebase:firebase-firestore:21.2.1'
     implementation 'com.google.firebase:firebase-storage:19.1.0'

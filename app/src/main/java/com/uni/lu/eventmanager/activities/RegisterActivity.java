@@ -57,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
 		btnRegister.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				emailLogin = new EmailLogin(RegisterActivity.this);
-				emailLogin.register();
+				emailLogin.register(userName.getText().toString());
 			}
 		});
 

@@ -42,6 +42,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/ic_register_hero" />
+
             </RelativeLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -95,7 +96,7 @@
                 android:id="@+id/loading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="end"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="64dp"
                 android:layout_marginEnd="32dp"
@@ -107,6 +108,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.3" />
 
+
             <TextView
                 android:id="@+id/registerUser"
                 style="@style/parent"
@@ -116,7 +118,6 @@
                 android:textColor="@color/themeColor"
                 android:textSize="17sp"
                 android:textStyle="bold" />
-
 
             <LinearLayout
                 android:layout_width="match_parent"
