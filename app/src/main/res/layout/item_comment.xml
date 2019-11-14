@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/profilePic"
+        android:layout_width="40dp"
+        android:layout_height="39dp"
+        android:background="#757575"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/commentText"
+        style="@style/AppTheme.Body1"
+        android:layout_width="332dp"
+        android:layout_height="32dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="7dp"
+        android:layout_marginLeft="-240dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="13dp"
+        android:layout_toEndOf="@+id/profilePic"
+        android:layout_toRightOf="@+id/startDate"
+        android:textColor="@color/greySecondary"
+        tools:text="Comment" />
+
+</RelativeLayout>

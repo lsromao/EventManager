@@ -51,15 +51,4 @@ public class DateFormats {
 		return dt;
 	}
 
-	public String validateDates(Date start, Date end) {
-		Date dt = new Date();
-		if (start.before(dt)) {
-			return "Start time cannot be in the past!";
-		}else if (end.before(start)){
-			return "End time cannot be before start date!";
-		}
-
-		return "NO IF";
-	}
-
 }

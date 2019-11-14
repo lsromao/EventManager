@@ -1,11 +1,54 @@
 package com.uni.lu.eventmanager.model;
 
+import com.uni.lu.eventmanager.controller.FirebaseController;
+
 import java.util.Date;
 
 public class CommentModel {
 
-	private int    id;
 	private String comment;
-	private int    eventId;
+	private String userName;
+	private String userId;
 	private Date   date;
+
+	public CommentModel(String comment){
+		this.comment = comment;
+		this.userName = "Lucas";
+		this.userId = FirebaseController.getInstance().getmAuth().getCurrentUser().getUid();
+		this.date = new Date();
+	}
+
+	public CommentModel(){}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
 }

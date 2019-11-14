@@ -2,6 +2,7 @@ package com.uni.lu.eventmanager.controller;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class FirebaseController {
 
@@ -33,5 +34,10 @@ public class FirebaseController {
 
     public void setmGoogleSignInClient(GoogleSignInClient mGoogleSignInClient) {
         this.mGoogleSignInClient = mGoogleSignInClient;
+    }
+
+    public FirebaseFirestore getFirestoreInstance(){
+       return FirebaseFirestore.getInstance();
+
     }
 }

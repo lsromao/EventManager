@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/profilePic"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="#757575"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/eventTitle"
+        style="@style/AppTheme.Subheader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/profilePic"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="-2dp"
+        android:layout_marginBottom="4dp"
+        android:layout_toEndOf="@+id/profilePic"
+        android:layout_toRightOf="@+id/profilePic"
+        android:ellipsize="end"
+        android:maxLines="1"
+        tools:text="Foo's Bar" />
+
+    <TextView
+        android:id="@+id/category"
+        style="@style/AppTheme.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eventTitle"
+        android:layout_alignLeft="@+id/eventTitle"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@+id/profilePic"
+        android:textColor="@color/greySecondary"
+        tools:text="Italian" />
+
+    <TextView
+        android:id="@+id/startDate"
+        style="@style/AppTheme.TextDivider"
+        android:layout_width="306dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/category"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="9dp"
+        android:layout_marginLeft="-38dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="10dp"
+        android:layout_toEndOf="@+id/profilePic"
+        android:layout_toRightOf="@+id/category"
+        android:text="@string/divider_bullet" />
+
+    <TextView
+        android:id="@+id/commentText"
+        style="@style/AppTheme.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:layout_above="@+id/startDate"
+        android:layout_alignTop="@+id/category"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="11dp"
+        android:layout_marginLeft="-240dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toEndOf="@+id/category"
+        android:layout_toRightOf="@+id/startDate"
+        android:textColor="@color/greySecondary"
+        tools:text="San Francisco" />
+
+</RelativeLayout>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.EventActivity">
+
+        <ImageView
+            android:id="@+id/eventCover"
+            android:layout_width="392dp"
+            android:layout_height="126dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@color/black" />
+
+        <TextView
+            android:id="@+id/eventTitle"
+            android:layout_width="284dp"
+            android:layout_height="37dp"
+            android:layout_marginEnd="52dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eventCover"/>
+
+        <ImageView
+            android:id="@+id/favorite"
+            android:layout_width="31dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toStartOf="@+id/eventTitle"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eventCover"
+            app:srcCompat="@drawable/ic_like"/>
+
+        <ImageView
+            android:id="@+id/icon_time"
+            android:layout_width="23dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/favorite"
+            app:srcCompat="@drawable/ic_time"/>
+
+        <TextView
+            android:id="@+id/startEvent"
+            android:layout_width="299dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/icon_time"
+            app:layout_constraintTop_toBottomOf="@+id/eventTitle"/>
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="30dp"
+            android:layout_height="29dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/icon_time"
+            app:srcCompat="@drawable/ic_placeholder"/>
+
+        <TextView
+            android:id="@+id/locationEvent"
+            android:layout_width="299dp"
+            android:layout_height="29dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            app:layout_constraintTop_toBottomOf="@+id/startEvent"/>
+
+        <TextView
+            android:id="@+id/descriptionEvent"
+            android:layout_width="345dp"
+            android:layout_height="66dp"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/locationEvent"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/commentsView"
+            android:layout_width="391dp"
+            android:layout_height="259dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/addComment"
+            android:layout_width="177dp"
+            android:layout_height="41dp"
+            android:layout_marginStart="16dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/commentsView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionEvent"
+            app:layout_constraintVertical_bias="0.465"/>
+
+            <Button
+            android:id="@+id/saveComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="52dp"
+            android:text="Save"
+            app:layout_constraintBottom_toTopOf="@+id/commentsView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.912"
+            app:layout_constraintStart_toEndOf="@+id/addComment"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionEvent"
+            app:layout_constraintVertical_bias="0.421"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
