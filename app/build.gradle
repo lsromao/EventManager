@@ -1,8 +1,14 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    mavenCentral()
+    maven { url 'https://maven.google.com' }
+
+}
+
 android {
-    compileSdkVersion 28
-    buildToolsVersion "28.0.3"
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.uni.lu.eventmanager"
         minSdkVersion 24
@@ -29,24 +35,41 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.navigation:navigation-fragment:2.1.0'
     implementation 'androidx.navigation:navigation-ui:2.1.0'
-    implementation 'com.google.firebase:firebase-analytics:17.2.1'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    //Firebase
+    implementation 'com.google.firebase:firebase-analytics:17.2.1'
     implementation 'com.google.firebase:firebase-auth:19.1.0'
-    implementation 'com.google.android.gms:play-services-auth:17.0.0'
-    implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'br.com.simplepass:loading-button-android:1.14.0'
     implementation 'com.google.firebase:firebase-firestore:21.2.1'
     implementation 'com.google.firebase:firebase-storage:19.1.0'
 
-    implementation 'com.google.android.libraries.places:places:2.0.0'
+    //Firebase UI
+    implementation 'com.firebaseui:firebase-ui-firestore:6.0.2'
+    implementation 'com.firebaseui:firebase-ui-storage:6.0.2'
+
+    //Google
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.android.libraries.places:places:2.1.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
-
-    implementation 'com.github.shivpujan12:LocationPicker:v1.2'
     implementation "com.google.android.gms:play-services-location:17.0.0"
-
     implementation 'com.google.android.gms:play-services-plus:17.0.0'
 
+    implementation 'com.github.shivpujan12:LocationPicker:v1.2'
+    implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
 
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'com.github.bumptech.glide:annotations:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
+    implementation "com.android.support:support-annotations:28.0.0"
+    annotationProcessor 'com.android.support:support-annotations:28.0.0'
+
+    implementation 'br.com.simplepass:loading-button-android:1.14.0'
 
 }
 

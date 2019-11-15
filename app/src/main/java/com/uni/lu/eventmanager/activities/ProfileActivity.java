@@ -15,24 +15,20 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.navigation.NavigationView;
-import com.squareup.picasso.Picasso;
 import com.uni.lu.eventmanager.R;
 import com.uni.lu.eventmanager.controller.FirebaseController;
-import com.uni.lu.eventmanager.media.CircleTransform;
-import com.uni.lu.eventmanager.model.UserModel;
+import com.uni.lu.eventmanager.media.GlideApp;
 
 public class ProfileActivity extends AppCompatActivity {
 
 	private AppBarConfiguration mAppBarConfiguration;
-	private UserModel           userModel;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile);
-
-		userModel = new UserModel();
 
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
@@ -51,16 +47,18 @@ public class ProfileActivity extends AppCompatActivity {
 
 		View header = navigationView.getHeaderView(0);
 		TextView userEmail = header.findViewById(R.id.userEmail);
-		userEmail.setText(userModel.getEmail());
+		userEmail.setText(FirebaseController.getInstance().getmAuth().getCurrentUser().getEmail());
 		TextView userName = header.findViewById(R.id.userName);
-		userName.setText(userModel.getUserName());
+		userName.setText(FirebaseController.getInstance().getmAuth().getCurrentUser().getDisplayName());
 
 		ImageView ivBasicImage = header.findViewById(R.id.imageView);
-		Picasso.get()
-				.load(userModel.getPhotoUrl())
-				.resize(108, 108)
-				.centerCrop()
-				.transform(new CircleTransform())
+		GlideApp.with(this)
+				.setDefaultRequestOptions(new RequestOptions()
+						.fitCenter()
+						.circleCrop()
+						.error(R.drawable.ic_user)
+						.placeholder(R.drawable.ic_user))
+				.load(FirebaseController.getInstance().getmAuth().getCurrentUser().getPhotoUrl())
 				.into(ivBasicImage);
 
 		navigationView.getMenu().findItem(R.id.sign_out).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {

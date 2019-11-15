@@ -17,4 +17,5 @@ public class EventsView extends ViewModel {
 	public LiveData<String> getText() {
 		return mText;
 	}
+
 }
