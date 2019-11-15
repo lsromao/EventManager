@@ -182,7 +182,7 @@ public class AddEventsFragment extends Fragment {
 						Toast.makeText(getActivity(), "Start date cannot be in the past!", Toast.LENGTH_SHORT).show();
 						Log.w(TAG, "Error Event: Start date in the past");
 					} else {
-						createEvent(tt, desc, cat, loc, priv.equals("Public") ? true : false, start, today, bar);
+						createEvent(tt, desc, cat, loc, priv.equals("Public") ? false : true, start, today, bar);
 
 					}
 				}

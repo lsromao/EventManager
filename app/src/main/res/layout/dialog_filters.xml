@@ -48,12 +48,12 @@
             android:tint="@color/greySecondary"
             app:srcCompat="@drawable/ic_placeholder" />
 
-        <TextView
+        <EditText
             android:id="@+id/locationFiler"
             android:layout_width="332dp"
             android:layout_height="44dp"
             android:layout_toRightOf="@+id/icon_city"
-            android:text="TextView" />
+            android:hint="Location" />
 
     </RelativeLayout>
 

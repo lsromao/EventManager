@@ -26,7 +26,7 @@ public class CommentAdapter extends FirestoreRecyclerAdapter<CommentModel, Comme
 	 */
 	public CommentAdapter(@NonNull FirestoreRecyclerOptions<CommentModel> options, Activity activity) {
 		super(options);
-		this.activity=activity;
+		//this.activity=activity;
 
 	}
 
@@ -34,7 +34,7 @@ public class CommentAdapter extends FirestoreRecyclerAdapter<CommentModel, Comme
 	protected void onBindViewHolder(@NonNull CommentViewHolder holder, int position, @NonNull CommentModel model) {
 		holder.setComment(model.getComment());
 		//TODO Check
-		holder.setProfilePic(model.getUserPic(), activity);
+		holder.setProfilePic(model.getUserPic());
 		holder.setDate(model.getDate().toString());
 	}
 

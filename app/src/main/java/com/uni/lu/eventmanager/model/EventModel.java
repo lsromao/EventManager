@@ -3,9 +3,7 @@ package com.uni.lu.eventmanager.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class EventModel implements Parcelable {
 
@@ -17,7 +15,6 @@ public class EventModel implements Parcelable {
 	private boolean                 privacy;
 	private String                  uriCover;
 	private String                  userId;
-	private ArrayList<LikeModel>         listLikes;
 	private Date                    startDate;
 	private Date                    created;
 
@@ -34,7 +31,6 @@ public class EventModel implements Parcelable {
 		this.userId = userId;
 		this.startDate = startDate;
 		this.created = created;
-		this.listLikes = new ArrayList<>();
 	}
 
 
@@ -49,8 +45,6 @@ public class EventModel implements Parcelable {
 		userId = in.readString();
 		startDate = (Date) in.readSerializable();
 		created = (Date) in.readSerializable();
-		listLikes = in.readArrayList(LikeModel.class.getClassLoader());
-
 	}
 
 	public static final Creator<EventModel> CREATOR = new Creator<EventModel>() {
@@ -137,14 +131,6 @@ public class EventModel implements Parcelable {
 		this.created = created;
 	}
 
-	public List<LikeModel> getListLikes() {
-		return listLikes;
-	}
-
-	public void setListLikes(ArrayList<LikeModel> listLikes) {
-		this.listLikes = listLikes;
-	}
-
 	public String getDocName() {
 		return docName;
 	}
@@ -170,6 +156,5 @@ public class EventModel implements Parcelable {
 		dest.writeString(userId);
 		dest.writeSerializable(startDate);
 		dest.writeSerializable(created);
-		dest.writeList(listLikes);
 	}
 }
