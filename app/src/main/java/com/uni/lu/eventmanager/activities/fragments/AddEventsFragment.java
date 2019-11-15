@@ -1,18 +1,14 @@
 package com.uni.lu.eventmanager.activities.fragments;
 
-import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
-import android.content.Intent;
-import android.icu.util.Calendar;
-import android.net.Uri;
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.icu.util.Calendar;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,11 +20,6 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -38,34 +29,21 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.shivtechs.maplocationpicker.LocationPickerActivity;
-import com.shivtechs.maplocationpicker.MapUtility;
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.shivtechs.maplocationpicker.LocationPickerActivity;
+import com.shivtechs.maplocationpicker.MapUtility;
 import com.uni.lu.eventmanager.R;
 import com.uni.lu.eventmanager.controller.FirebaseController;
+import com.uni.lu.eventmanager.media.GlideApp;
 import com.uni.lu.eventmanager.model.EventModel;
 import com.uni.lu.eventmanager.util.Categories;
 import com.uni.lu.eventmanager.util.DateFormats;
-
-import java.util.Date;
-import com.uni.lu.eventmanager.controller.FirebaseController;
-import com.uni.lu.eventmanager.model.EventModel;
-import com.uni.lu.eventmanager.util.Categories;
-import com.uni.lu.eventmanager.util.DateFormats;
+import com.uni.lu.eventmanager.util.Gallery;
 import com.uni.lu.eventmanager.util.Privacy;
 
 import java.util.Date;
@@ -75,54 +53,46 @@ public class AddEventsFragment extends Fragment {
 	private static final String TAG                  = "DB Event";
 	private static final int    GALLERY_REQUEST_CODE = 2;
 
-    private static final int LOC_REQ_CODE = 1;
-    private static final int ADDRESS_PICKER_REQUEST = 1020;
-    private final int PICK_IMAGE_REQUEST = 71;
+	private static final int LOC_REQ_CODE           = 1;
+	private static final int ADDRESS_PICKER_REQUEST = 1020;
+	private final        int PICK_IMAGE_REQUEST     = 71;
+
+	private Gallery gallery = new Gallery();
 
 	private DateFormats      dtFormat;
 	private TimePickerDialog picker;
 	TextView location;
+
 	public View onCreateView(@NonNull LayoutInflater inflater,
 	                         ViewGroup container, Bundle savedInstanceState) {
 
-        MapUtility.apiKey = "AIzaSyDfXCxIe_vA2APaofzjGWi_9jKoFmXhE4I";
+		MapUtility.apiKey = "AIzaSyDfXCxIe_vA2APaofzjGWi_9jKoFmXhE4I";
 
 		final View root = inflater.inflate(R.layout.fragment_add_event, container, false);
 
-		final TextView title       = root.findViewById(R.id.eventTitle);
-		final TextView description = root.findViewById(R.id.editDescription);
-		final TextView startDate   = root.findViewById(R.id.startDate);
-		final TextView endDate     = root.findViewById(R.id.endDate);
-		ImageView      cover       = root.findViewById(R.id.eventCover);
-		final TextView startTime   = root.findViewById(R.id.startTime);
-		final TextView endTime     = root.findViewById(R.id.endTime);
+		final TextView title       = root.findViewById(R.id.titleEventAddEvents);
+		final TextView description = root.findViewById(R.id.descriptionAddEvents);
+		final TextView startDate   = root.findViewById(R.id.startDateAddEvents);
+		ImageView      cover       = root.findViewById(R.id.coverAddEvents);
+		final TextView startTime   = root.findViewById(R.id.startTimeAddEvents);
 		Button         save        = root.findViewById(R.id.saveEvent);
-		final Spinner  categories  = root.findViewById(R.id.categories);
-		location    = root.findViewById(R.id.editLocation);
-		final Button button = root.findViewById(R.id.select_place);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getCurrentPlaceItems();
-            }
-        });
+		final Spinner  categories  = root.findViewById(R.id.categoryAddEvents);
+		final Spinner  privacy     = root.findViewById(R.id.privacyAddEvents);
+		location = root.findViewById(R.id.locationAddEvents);
+		//final Button button = root.findViewById(R.id.select_place);
+
+
+		location.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				getCurrentPlaceItems();
+			}
+		});
 
 		dtFormat = new DateFormats();
 
-		startDate.setOnClickListener(new View.OnClickListener() {
-
-		final View root = inflater.inflate(R.layout.fragment_add_event, container, false);
-
-		final TextView title       = root.findViewById(R.id.eventTitle);
-		final TextView description = root.findViewById(R.id.editDescription);
-		final TextView startDate   = root.findViewById(R.id.startDate);
-		ImageView      cover       = root.findViewById(R.id.eventCover);
-		final TextView startTime   = root.findViewById(R.id.startTime);
-		Button         save        = root.findViewById(R.id.saveEvent);
-		final Spinner  categories  = root.findViewById(R.id.categories);
-		final Spinner  privacy  = root.findViewById(R.id.privacy);
-		final ProgressBar bar = root.findViewById(R.id.progressLoading);
-		final TextView location = root.findViewById(R.id.editLocation);
+		final ProgressBar bar = root.findViewById(R.id.progressBarAddAEvents);
+		bar.setVisibility(View.GONE);
 
 		dtFormat = new DateFormats();
 
@@ -152,7 +122,6 @@ public class AddEventsFragment extends Fragment {
 				datePicker.show();
 			}
 		});
-
 
 
 		startTime.setOnClickListener(new View.OnClickListener() {
@@ -185,9 +154,9 @@ public class AddEventsFragment extends Fragment {
 				String tt      = title.getText().toString();
 				String desc    = description.getText().toString();
 				String cat     = categories.getSelectedItem().toString();
-				String priv  = privacy.getSelectedItem().toString();
-				String loc  = location.getText().toString();
-				Date today = new Date();
+				String priv    = privacy.getSelectedItem().toString();
+				String loc     = location.getText().toString();
+				Date   today   = new Date();
 
 				if (tt.length() < 1) {
 					Toast.makeText(getActivity(), "Title cannot be empty!", Toast.LENGTH_SHORT).show();
@@ -209,10 +178,10 @@ public class AddEventsFragment extends Fragment {
 					Log.w(TAG, "Error Event: Category not select!");
 				} else {
 					Date start = dtFormat.getDateTime(startDt, startTm);
-					if (start.before(today)){
+					if (start.before(today)) {
 						Toast.makeText(getActivity(), "Start date cannot be in the past!", Toast.LENGTH_SHORT).show();
 						Log.w(TAG, "Error Event: Start date in the past");
-					}else{
+					} else {
 						createEvent(tt, desc, cat, loc, priv.equals("Public") ? true : false, start, today, bar);
 
 					}
@@ -223,141 +192,48 @@ public class AddEventsFragment extends Fragment {
 		categories.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, Categories.CATEGORIES.values()));
 
 
-
-
-		save.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				String startDt = startDate.getText().toString();
-				String endDt   = endDate.getText().toString();
-				String startTm = startTime.getText().toString();
-				String endTm   = endTime.getText().toString();
-				String tt      = title.getText().toString();
-				String desc    = description.getText().toString();
-				String cat     = categories.getSelectedItem().toString();
-				String geo     = location.getText().toString();
-
-				if (tt.length() < 1) {
-					Toast.makeText(getActivity(), "Title cannot be empty!", Toast.LENGTH_SHORT).show();
-					Log.w(TAG, "Error Event: Title Empty");
-				} else if (desc.length() < 10) {
-					Toast.makeText(getActivity(), "Description cannot be empty or less than 10 chars!", Toast.LENGTH_SHORT).show();
-					Log.w(TAG, "Error Event: Description Error!");
-				} else if (startDt.length() < 1) {
-					Toast.makeText(getActivity(), "Start Date cannot be empty!", Toast.LENGTH_SHORT).show();
-					Log.w(TAG, "Error Event: Start Date empty!");
-				} else if (endDt.length() < 1) {
-					Toast.makeText(getActivity(), "End Date cannot be empty!", Toast.LENGTH_SHORT).show();
-					Log.w(TAG, "Error Event: End Date empty!");
-				} else if (startTm.length() < 1) {
-					Toast.makeText(getActivity(), "Start Time cannot be empty!", Toast.LENGTH_SHORT).show();
-					Log.w(TAG, "Error Event: Start Time empty!");
-				} else if (endTm.length() < 1) {
-					Toast.makeText(getActivity(), "End Time cannot be empty!", Toast.LENGTH_SHORT).show();
-					Log.w(TAG, "Error Event: End Time empty!");
-				} else if (cat.equals("Select")) {
-					Toast.makeText(getActivity(), "Please select a category!", Toast.LENGTH_SHORT).show();
-					Log.w(TAG, "Error Event: Category not select!");
-				} else {
-					Date start = dtFormat.getDateTime(startDt, startTm);
-					Date end   = dtFormat.getDateTime(endDt, endTm);
-					createEvent(tt, desc, start, end, true);
-				}
-			}
-		});
-
-
 		return root;
 	}
 
-    private void getCurrentPlaceItems() {
-        if (isLocationAccessPermitted()) {
-            showPlacePicker();
-        } else {
-            requestLocationAccessPermission();
-        }
-    }
-
-    @SuppressLint("MissingPermission")
-    private void showPlacePicker() {
-        Intent i = new Intent(getContext(), LocationPickerActivity.class);
-        startActivityForResult(i, ADDRESS_PICKER_REQUEST);
-
-    }
-
-    private boolean isLocationAccessPermitted() {
-        if (ContextCompat.checkSelfPermission(getContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    private void requestLocationAccessPermission() {
-        ActivityCompat.requestPermissions(getActivity(),
-                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                LOC_REQ_CODE);
-    }
-
-	private void createEvent(String title, String description, Date startTime, Date endTime, boolean privacy) {
-
-		dtFormat = new DateFormats();
-		Toast.makeText(getActivity(), dtFormat.validateDates(startTime,endTime), Toast.LENGTH_SHORT).show();
-
-		String            id    = FirebaseController.getInstance().getmAuth().getCurrentUser().getUid();
-		FirebaseFirestore db    = FirebaseFirestore.getInstance();
-		EventModel        event = new EventModel(title, description, startTime, endTime, location.getText().toString(), true, id, "", "");
-
-		db.collection("events")
-				.add(event)
-				.addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-					@Override
-					public void onSuccess(DocumentReference documentReference) {
-						Toast.makeText(getActivity(), "Save in Database!", Toast.LENGTH_SHORT).show();
-						Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-					}
-				})
-				.addOnFailureListener(new OnFailureListener() {
-					@Override
-					public void onFailure(@NonNull Exception e) {
-						Toast.makeText(getActivity(), "Error to save in Database!", Toast.LENGTH_SHORT).show();
-						Log.w(TAG, "Error adding document", e);
-					}
-				});
-
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-
-		if (requestCode == ADDRESS_PICKER_REQUEST) {
-			try {
-				if (data != null && data.getStringExtra(MapUtility.ADDRESS) != null) {
-					String address = data.getStringExtra(MapUtility.ADDRESS);
-					double currentLatitude = data.getDoubleExtra(MapUtility.LATITUDE, 0.0);
-					double currentLongitude = data.getDoubleExtra(MapUtility.LONGITUDE, 0.0);
-					location.setText(address);
-//					eventLocation.setText(address);
-//					location = new EventLocation(address,currentLatitude,currentLongitude);
-
-				}
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
+	private void getCurrentPlaceItems() {
+		if (isLocationAccessPermitted()) {
+			showPlacePicker();
+		} else {
+			requestLocationAccessPermission();
 		}
 	}
 
+	@SuppressLint("MissingPermission")
+	private void showPlacePicker() {
+		Intent i = new Intent(getContext(), LocationPickerActivity.class);
+		startActivityForResult(i, ADDRESS_PICKER_REQUEST);
 
-	private void createEvent(final String title, final  String description, final String category, final String location,
+	}
+
+	private boolean isLocationAccessPermitted() {
+		if (ContextCompat.checkSelfPermission(getContext(),
+				Manifest.permission.ACCESS_FINE_LOCATION)
+		    != PackageManager.PERMISSION_GRANTED) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	private void requestLocationAccessPermission() {
+		ActivityCompat.requestPermissions(getActivity(),
+				new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+				LOC_REQ_CODE);
+	}
+
+	private void createEvent(final String title, final String description, final String category, final String location,
 	                         final boolean privacy, final Date startTime, final Date created, final ProgressBar bar) {
 
 		//Image to FireStrore
 		StorageReference storageRef    = FirebaseStorage.getInstance().getReference();
 		StorageReference eventCoverRef = storageRef.child("event/" + title.replaceAll("\\s+", "") + startTime.hashCode());
 		bar.setVisibility(View.VISIBLE);
-		eventCoverRef.putFile(tempUrl)
+		eventCoverRef.putFile(gallery.getUrlTemp())
 				.addOnFailureListener(new OnFailureListener() {
 					@Override
 					public void onFailure(@NonNull Exception exception) {
@@ -365,17 +241,17 @@ public class AddEventsFragment extends Fragment {
 
 					}
 				}).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-					@Override
-					public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-						String tent = taskSnapshot.getMetadata().getReference().toString();
-						//String eventCover = eventCoverRef.getName();
-						saveInFirebase(title,description, category, location, privacy, startTime, created, tent, bar);
-						Log.w(TAG, "createEvent:success");
-					}
+			@Override
+			public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+				String tent = taskSnapshot.getMetadata().getReference().toString();
+				saveInFirebase(title, description, category, location, privacy, startTime, created, tent, bar);
+				Log.w(TAG, "createEvent:success");
+			}
 		});
 
 
 	}
+
 
 	@Override
 	public void onActivityResult(int reqCode, int resultCode, Intent data) {
@@ -386,14 +262,26 @@ public class AddEventsFragment extends Fragment {
 				case GALLERY_REQUEST_CODE:
 					//data.getData returns the content URI for the selected Image
 					Uri selectedImage = data.getData();
-					tempUrl = selectedImage;
-					ImageView cover = getActivity().findViewById(R.id.eventCover);
-					Glide.with(this)
+					gallery.setUrlTemp(selectedImage);
+					//tempUrl = selectedImage;
+					ImageView cover = getActivity().findViewById(R.id.coverAddEvents);
+					GlideApp.with(this)
 							.load(selectedImage)
-							.apply(new RequestOptions().centerCrop().fitCenter())
+							.apply(new RequestOptions().centerCrop())
 							.into(cover);
 					break;
+				case ADDRESS_PICKER_REQUEST:
+					try {
+						if (data != null && data.getStringExtra(MapUtility.ADDRESS) != null) {
+							String address          = data.getStringExtra(MapUtility.ADDRESS);
+							double currentLatitude  = data.getDoubleExtra(MapUtility.LATITUDE, 0.0);
+							double currentLongitude = data.getDoubleExtra(MapUtility.LONGITUDE, 0.0);
+							location.setText(address);
 
+						}
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
 			}
 	}
 
@@ -409,20 +297,20 @@ public class AddEventsFragment extends Fragment {
 		startActivityForResult(intent, GALLERY_REQUEST_CODE);
 	}
 
-	private void saveInFirebase(String title, String description, String category, String location, boolean privacy, Date startTime, Date created, String uri, final ProgressBar bar){
+	private void saveInFirebase(String title, String description, String category, String location, boolean privacy, Date startTime, Date created, String uri, final ProgressBar bar) {
 
-		String            id    = FirebaseController.getInstance().getmAuth().getCurrentUser().getUid();
-		FirebaseFirestore db    = FirebaseFirestore.getInstance();
-		EventModel        event = new EventModel(title, description, category, location, privacy, uri, id, startTime, created);
+		String     id      = FirebaseController.getInstance().getmAuth().getCurrentUser().getUid();
+		EventModel event   = new EventModel(title, description, category, location, privacy, uri, id, startTime, created);
+		String     docName = title.replaceAll("\\s+", "") + startTime.hashCode();
+		event.setDocName(docName);
 
-		db.collection("events")
-				.add(event)
-				.addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+		FirebaseController.getInstance().getEventsCollectionReference().document(docName)
+				.set(event)
+				.addOnSuccessListener(new OnSuccessListener<Void>() {
 					@Override
-					public void onSuccess(DocumentReference documentReference) {
-						Toast.makeText(getActivity(), "Save in Database!", Toast.LENGTH_SHORT).show();
-						Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+					public void onSuccess(Void aVoid) {
 						bar.setVisibility(View.GONE);
+						getFragmentManager().popBackStackImmediate();
 					}
 				})
 				.addOnFailureListener(new OnFailureListener() {

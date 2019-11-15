@@ -3,19 +3,23 @@ package com.uni.lu.eventmanager.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class EventModel implements Parcelable {
 
-	private String  title;
-	private String  description;
-	private String  category;
-	private String  location;
-	private boolean privacy;
-	private String  uriCover;
-	private String  userId;
-	private Date    startDate;
-	private Date    created;
+	private String docName;
+	private String                  title;
+	private String                  description;
+	private String                  category;
+	private String                  location;
+	private boolean                 privacy;
+	private String                  uriCover;
+	private String                  userId;
+	private ArrayList<LikeModel>         listLikes;
+	private Date                    startDate;
+	private Date                    created;
 
 	public EventModel(){}
 
@@ -30,10 +34,12 @@ public class EventModel implements Parcelable {
 		this.userId = userId;
 		this.startDate = startDate;
 		this.created = created;
+		this.listLikes = new ArrayList<>();
 	}
 
 
 	protected EventModel(Parcel in) {
+		docName = in.readString();
 		title = in.readString();
 		description = in.readString();
 		category = in.readString();
@@ -43,6 +49,7 @@ public class EventModel implements Parcelable {
 		userId = in.readString();
 		startDate = (Date) in.readSerializable();
 		created = (Date) in.readSerializable();
+		listLikes = in.readArrayList(LikeModel.class.getClassLoader());
 
 	}
 
@@ -130,6 +137,22 @@ public class EventModel implements Parcelable {
 		this.created = created;
 	}
 
+	public List<LikeModel> getListLikes() {
+		return listLikes;
+	}
+
+	public void setListLikes(ArrayList<LikeModel> listLikes) {
+		this.listLikes = listLikes;
+	}
+
+	public String getDocName() {
+		return docName;
+	}
+
+	public void setDocName(String docName) {
+		this.docName = docName;
+	}
+
 	@Override
 	public int describeContents() {
 		return 0;
@@ -137,6 +160,7 @@ public class EventModel implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(docName);
 		dest.writeString(title);
 		dest.writeString(description);
 		dest.writeString(category);
@@ -146,5 +170,6 @@ public class EventModel implements Parcelable {
 		dest.writeString(userId);
 		dest.writeSerializable(startDate);
 		dest.writeSerializable(created);
+		dest.writeList(listLikes);
 	}
 }

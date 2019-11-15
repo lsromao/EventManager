@@ -1,7 +1,10 @@
 package com.uni.lu.eventmanager.controller;
 
+import android.net.Uri;
+
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class FirebaseController {
@@ -39,5 +42,39 @@ public class FirebaseController {
     public FirebaseFirestore getFirestoreInstance(){
        return FirebaseFirestore.getInstance();
 
+    }
+
+    public String getUserName(){
+       return getmAuth().getCurrentUser().getDisplayName();
+    }
+
+    public String getUserImageUrl(){
+        Uri uri =  getmAuth().getCurrentUser().getPhotoUrl();
+
+        if (uri != null){
+            return uri.toString();
+        }
+
+        return "";
+    }
+
+    public String getUserEmail(){
+        return getmAuth().getCurrentUser().getEmail();
+    }
+
+    public String getUserId(){
+        return getmAuth().getCurrentUser().getUid();
+    }
+
+    public CollectionReference getCommentsCollectionReference(){
+        return getFirestoreInstance().collection("comments");
+    }
+
+    public CollectionReference getEventsCollectionReference(){
+        return getFirestoreInstance().collection("events");
+    }
+
+    public CollectionReference getLikesCollectionReference(){
+        return getFirestoreInstance().collection("likes");
     }
 }

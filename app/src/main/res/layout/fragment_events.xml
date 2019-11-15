@@ -92,7 +92,7 @@
         <!-- Shadow below toolbar -->
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerRestaurants"
+            android:id="@+id/recyclerItems"
             android:layout_width="407dp"
             android:layout_height="655dp"
             android:layout_below="@+id/filterBarContainer"
@@ -139,8 +139,8 @@
             android:id="@+id/progressLoading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/recyclerRestaurants"
-            android:layout_alignTop="@+id/recyclerRestaurants"
+            android:layout_alignBottom="@+id/recyclerItems"
+            android:layout_alignTop="@+id/recyclerItems"
             android:layout_centerHorizontal="true"
             android:visibility="gone" />
 

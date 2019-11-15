@@ -1,5 +1,6 @@
 package com.uni.lu.eventmanager.adapter;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,20 +16,26 @@ import com.uni.lu.eventmanager.view.CommentViewHolder;
 public class CommentAdapter extends FirestoreRecyclerAdapter<CommentModel, CommentViewHolder> {
 
 
+	private Activity activity;
+
 	/**
 	 * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
 	 * FirestoreRecyclerOptions} for configuration options.
 	 *
 	 * @param options
 	 */
-	public CommentAdapter(@NonNull FirestoreRecyclerOptions<CommentModel> options) {
+	public CommentAdapter(@NonNull FirestoreRecyclerOptions<CommentModel> options, Activity activity) {
 		super(options);
+		this.activity=activity;
+
 	}
 
 	@Override
 	protected void onBindViewHolder(@NonNull CommentViewHolder holder, int position, @NonNull CommentModel model) {
 		holder.setComment(model.getComment());
-		//holder.setProfilePic(model.getUserName());
+		//TODO Check
+		holder.setProfilePic(model.getUserPic(), activity);
+		holder.setDate(model.getDate().toString());
 	}
 
 	@NonNull

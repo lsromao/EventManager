@@ -46,7 +46,7 @@ public class EventsFragment extends Fragment implements OnItemListener {
 
 		set();
 
-		recyclerView = root.findViewById(R.id.recyclerRestaurants);
+		recyclerView = root.findViewById(R.id.recyclerItems);
 		recyclerView.setHasFixedSize(true);
 		linearLayoutManager = new LinearLayoutManager(getContext());
 		recyclerView.setLayoutManager(linearLayoutManager);
