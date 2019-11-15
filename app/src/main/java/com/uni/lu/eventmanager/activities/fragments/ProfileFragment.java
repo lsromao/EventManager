@@ -14,12 +14,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.uni.lu.eventmanager.R;
 import com.uni.lu.eventmanager.controller.FirebaseController;
 import com.uni.lu.eventmanager.media.GlideApp;
-import com.uni.lu.eventmanager.view.ProfileView;
 
 public class ProfileFragment extends Fragment {
-
-	private ProfileView profileView;
-	private UserModel userModel;
 
 	public View onCreateView(@NonNull LayoutInflater inflater,
 	                         ViewGroup container, Bundle savedInstanceState) {

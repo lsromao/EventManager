@@ -160,7 +160,7 @@
 
     <string-array name="sort_by">
         <item>@string/sort_by_rating</item>
-        <item>@string/sort_by_popularity</item>
+        <item>@string/sort_by_my_events</item>
         <item>@string/sort_by_price</item>
     </string-array>
 

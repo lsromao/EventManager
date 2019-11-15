@@ -96,7 +96,7 @@ public class EventActivity extends AppCompatActivity {
 			}
 		});
 
-		set();
+		setRecyclerView();
 
 		StorageReference gsReference = FirebaseStorage.getInstance().getReferenceFromUrl(event.getUriCover());
 		GlideApp.with(this)
@@ -104,16 +104,10 @@ public class EventActivity extends AppCompatActivity {
 				.load(gsReference).centerCrop().fitCenter()
 				.into(cover);
 
-
-
 		title.setText(event.getTitle());
 		start.setText(event.getStartDate().toString());
 		location.setText(event.getLocation());
 		desc.setText(event.getDescription());
-
-
-
-
 
 		saveComment.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -155,7 +149,6 @@ public class EventActivity extends AppCompatActivity {
 						bar.setVisibility(View.GONE);
 						EditText comment     = findViewById(R.id.eventAddComments);
 						comment.setText(null);
-						adapter.notifyDataSetChanged();
 					}
 				})
 				.addOnFailureListener(new OnFailureListener() {
@@ -168,19 +161,17 @@ public class EventActivity extends AppCompatActivity {
 
 	}
 
-	private void set(){
+	private void setRecyclerView(){
 
 
 		Query query = FirebaseController.getInstance().getCommentsCollectionReference()
 				.whereEqualTo("eventDocument", event.getDocName())
 				.orderBy("date", Query.Direction.DESCENDING);
 
-
 		FirestoreRecyclerOptions<CommentModel> options =
 				new FirestoreRecyclerOptions.Builder<CommentModel>()
 						.setQuery(query, CommentModel.class)
 						.build();
-
 
 		adapter = new CommentAdapter(options, this);
 

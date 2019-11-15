@@ -35,7 +35,7 @@ public class GoogleLogin {
 				.requestEmail()
 				.build();
 
-		FirebaseController.getInstance().setmGoogleSignInClient(GoogleSignIn.getClient(activity, gso));
+		FirebaseController.getInstance().setmGoogleSignInClient(GoogleSignIn.getClient(this.activity, gso));
 	}
 
 	public void loginGoogle(Intent data) {
@@ -81,6 +81,5 @@ public class GoogleLogin {
 		Intent signInIntent = FirebaseController.getInstance().getmGoogleSignInClient().getSignInIntent();
 		activity.startActivityForResult(signInIntent, LoginCodes.RC_SIGN_IN_GOOGLE);
 	}
-
 
 }

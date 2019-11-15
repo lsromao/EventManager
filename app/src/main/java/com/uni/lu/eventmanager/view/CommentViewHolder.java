@@ -1,6 +1,5 @@
 package com.uni.lu.eventmanager.view;
 
-import android.app.Activity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,9 +7,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.request.RequestOptions;
 import com.uni.lu.eventmanager.R;
-import com.uni.lu.eventmanager.media.GlideApp;
 
 public class CommentViewHolder extends RecyclerView.ViewHolder {
 	private View itemView;
@@ -20,12 +17,9 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
 		this.itemView = itemView;
 	}
 
-	public void setProfilePic(String uri, Activity activity){
+	public void setProfilePic(String uri){
 		ImageView profile = itemView.findViewById(R.id.itemProfilePic);
-		GlideApp.with(activity)
-				.setDefaultRequestOptions(new RequestOptions().error(R.drawable.ic_user))
-				.load(uri).centerCrop()
-				.into(profile);
+		profile.setImageResource(R.drawable.ic_user);
 	}
 
 	public void setComment(String commentText){
