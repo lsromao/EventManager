@@ -27,6 +27,11 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
 		comment.setText(commentText);
 	}
 
+	public void setName(String userName){
+		TextView name = itemView.findViewById(R.id.itemCommentName);
+		name.setText(userName);
+	}
+
 	public void setDate(String date){
 		TextView dt = itemView.findViewById(R.id.itemCommentDate);
 		dt.setText(date);

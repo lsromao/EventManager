@@ -1,16 +1,19 @@
 package com.uni.lu.eventmanager.activities;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,12 +35,14 @@ import com.uni.lu.eventmanager.media.GlideApp;
 import com.uni.lu.eventmanager.model.CommentModel;
 import com.uni.lu.eventmanager.model.EventModel;
 import com.uni.lu.eventmanager.model.LikeModel;
+import com.uni.lu.eventmanager.util.Categories;
+import com.uni.lu.eventmanager.util.Privacy;
 
 public class EventActivity extends AppCompatActivity {
 
-	private static final String TAG = "Save Comments" ;
-	private CommentAdapter adapter;
-	private EventModel event;
+	private static final String         TAG = "Save Comments";
+	private              CommentAdapter adapter;
+	private              EventModel     event;
 
 	private ProgressBar bar;
 
@@ -48,21 +53,37 @@ public class EventActivity extends AppCompatActivity {
 
 		event = getIntent().getParcelableExtra("Event Model");
 
-		TextView       title       = findViewById(R.id.eventTitle);
-		TextView       start       = findViewById(R.id.eventStartTime);
-		TextView       location    = findViewById(R.id.eventLocation);
-		TextView       desc        = findViewById(R.id.eventDescription);
-		final Button   saveComment = findViewById(R.id.saveComment);
-		final EditText comment     = findViewById(R.id.eventAddComments);
+		final EditText  title        = findViewById(R.id.eventTitle);
+		final EditText  start        = findViewById(R.id.eventStartTime);
+		final EditText  location     = findViewById(R.id.eventLocation);
+		final EditText  desc         = findViewById(R.id.eventDescription);
+		final EditText  cat          = findViewById(R.id.eventCategory);
+		final Button    saveComment  = findViewById(R.id.saveComment);
+		final Button    editEvent    = findViewById(R.id.editEvent);
+		final EditText  comment      = findViewById(R.id.eventAddComments);
+		final ImageView iconAccept   = findViewById(R.id.eventIconAccept);
+		final ImageView iconCancel   = findViewById(R.id.eventIconCancel);
+		final ImageView iconDelete   = findViewById(R.id.eventIconDelete);
+		final ImageView iconCategory = findViewById(R.id.eventCategoryIcon);
+		final Spinner   categories   = findViewById(R.id.categoryEvents);
+		final Spinner   privacy      = findViewById(R.id.privacyEvents);
 
-		final ImageView like = findViewById(R.id.eventFavoriteIcon);
-		ImageView cover = findViewById(R.id.eventCover);
+		final ImageView like  = findViewById(R.id.eventFavoriteIcon);
+		ImageView       cover = findViewById(R.id.eventCover);
 		bar = findViewById(R.id.progressBarEvents);
 		bar.setVisibility(View.GONE);
 
+		categories.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Categories.CATEGORIES.values()));
+		privacy.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Privacy.privacy.values()));
+
+		title.setEnabled(false);
+		start.setEnabled(false);
+		location.setEnabled(false);
+		desc.setEnabled(false);
+
 		final boolean isLiked = checkLike();
 
-		if (isLiked){
+		if (isLiked) {
 			GlideApp.with(EventActivity.this)
 					.load(R.drawable.ic_liked)
 					.into(like);
@@ -77,14 +98,14 @@ public class EventActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				boolean check = checkLike();
 				//TODO Add a better validation - Like will be blank after events changes
-				if (check){
+				if (check) {
 					FirebaseController.getInstance().getLikesCollectionReference().document(
 							(event.getDocName() + FirebaseController.getInstance().getUserName()).replaceAll("\\s+", ""))
 							.delete();
 					GlideApp.with(EventActivity.this)
 							.load(R.drawable.ic_like)
 							.into(like);
-				}else{
+				} else {
 					LikeModel likeModel = new LikeModel(event.getCategory(), event.getDocName());
 					FirebaseController.getInstance().getLikesCollectionReference().document(
 							(event.getDocName() + FirebaseController.getInstance().getUserName()).replaceAll("\\s+", ""))
@@ -108,20 +129,82 @@ public class EventActivity extends AppCompatActivity {
 		start.setText(event.getStartDate().toString());
 		location.setText(event.getLocation());
 		desc.setText(event.getDescription());
+		cat.setText(event.getCategory());
+
 
 		saveComment.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				String cc = comment.getText().toString();
-				if (cc.length() < 1){
-					Toast.makeText( EventActivity.this, "Please add your comments", Toast.LENGTH_SHORT).show();
-				}else {
+				if (cc.length() < 1) {
+					Toast.makeText(EventActivity.this, "Please add your comments", Toast.LENGTH_SHORT).show();
+				} else {
 					bar.setVisibility(View.VISIBLE);
 					saveComment(cc);
 				}
 			}
 		});
 
+		//TODO Taking a lot of time to load the first time
+		if (event.getUserId().equals(FirebaseController.getInstance().getUserId())) {
+			editEvent.setVisibility(View.VISIBLE);
+			iconAccept.setVisibility(View.VISIBLE);
+			iconCancel.setVisibility(View.VISIBLE);
+			iconDelete.setVisibility(View.VISIBLE);
+		}
+
+		editEvent.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				title.setEnabled(true);
+				title.setFocusableInTouchMode(true);
+
+				start.setEnabled(true);
+				start.setFocusableInTouchMode(true);
+
+				location.setEnabled(true);
+				location.setFocusableInTouchMode(true);
+
+				desc.setEnabled(true);
+				desc.setFocusableInTouchMode(true);
+
+				iconCategory.setVisibility(View.GONE);
+				cat.setVisibility(View.GONE);
+
+				categories.setVisibility(View.VISIBLE);
+				privacy.setVisibility(View.VISIBLE);
+			}
+		});
+
+		iconCancel.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				title.setEnabled(false);
+				title.setFocusableInTouchMode(false);
+
+				start.setEnabled(false);
+				start.setFocusableInTouchMode(false);
+
+				location.setEnabled(false);
+				location.setFocusableInTouchMode(false);
+
+				desc.setEnabled(false);
+				desc.setFocusableInTouchMode(false);
+
+				iconCategory.setVisibility(View.VISIBLE);
+				cat.setVisibility(View.VISIBLE);
+
+				categories.setVisibility(View.GONE);
+				privacy.setVisibility(View.GONE);
+			}
+		});
+
+		iconDelete.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				alertMessageForDelete();
+			}
+		});
 
 	}
 
@@ -137,7 +220,7 @@ public class EventActivity extends AppCompatActivity {
 		adapter.stopListening();
 	}
 
-	private void saveComment(String cc){
+	private void saveComment(String cc) {
 		CommentModel commentModel = new CommentModel(cc, event.getDocName());
 
 		FirebaseController.getInstance().getFirestoreInstance().collection("comments")
@@ -147,7 +230,7 @@ public class EventActivity extends AppCompatActivity {
 					public void onSuccess(DocumentReference documentReference) {
 						Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
 						bar.setVisibility(View.GONE);
-						EditText comment     = findViewById(R.id.eventAddComments);
+						EditText comment = findViewById(R.id.eventAddComments);
 						comment.setText(null);
 					}
 				})
@@ -161,7 +244,7 @@ public class EventActivity extends AppCompatActivity {
 
 	}
 
-	private void setRecyclerView(){
+	private void setRecyclerView() {
 
 
 		Query query = FirebaseController.getInstance().getCommentsCollectionReference()
@@ -182,17 +265,37 @@ public class EventActivity extends AppCompatActivity {
 		recyclerView.setAdapter(adapter);
 	}
 
-	private boolean checkLike(){
-		Query query =FirebaseController.getInstance().getLikesCollectionReference()
+	private boolean checkLike() {
+		Query query = FirebaseController.getInstance().getLikesCollectionReference()
 				.whereEqualTo("eventDocument", event.getDocName())
 				.whereEqualTo("userId", event.getUserId());
 
 		Task<QuerySnapshot> r = query.get();
 		//TODO Add better task handleing
-		while (!r.isComplete()){
+		while (!r.isComplete()) {
 
 		}
 
-		return r.getResult().getDocuments().size() !=0;
+		return r.getResult().getDocuments().size() != 0;
+	}
+
+	private void alertMessageForDelete() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.app_name);
+		builder.setMessage("Do you want to delete this event?");
+		builder.setIcon(R.drawable.ic_danger);
+		builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.dismiss();
+
+			}
+		});
+		builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.dismiss();
+			}
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
 	}
 }

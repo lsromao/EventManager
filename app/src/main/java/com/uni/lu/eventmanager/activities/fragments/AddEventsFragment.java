@@ -39,6 +39,7 @@ import com.shivtechs.maplocationpicker.LocationPickerActivity;
 import com.shivtechs.maplocationpicker.MapUtility;
 import com.uni.lu.eventmanager.R;
 import com.uni.lu.eventmanager.controller.FirebaseController;
+import com.uni.lu.eventmanager.dao.EventsDAOFirestore;
 import com.uni.lu.eventmanager.media.GlideApp;
 import com.uni.lu.eventmanager.model.EventModel;
 import com.uni.lu.eventmanager.util.Categories;
@@ -63,8 +64,12 @@ public class AddEventsFragment extends Fragment {
 	private TimePickerDialog picker;
 	TextView location;
 
+	private EventsDAOFirestore daoEvents;
+
 	public View onCreateView(@NonNull LayoutInflater inflater,
 	                         ViewGroup container, Bundle savedInstanceState) {
+
+		daoEvents = new EventsDAOFirestore();
 
 		MapUtility.apiKey = "AIzaSyDfXCxIe_vA2APaofzjGWi_9jKoFmXhE4I";
 
@@ -76,8 +81,8 @@ public class AddEventsFragment extends Fragment {
 		ImageView      cover       = root.findViewById(R.id.coverAddEvents);
 		final TextView startTime   = root.findViewById(R.id.startTimeAddEvents);
 		Button         save        = root.findViewById(R.id.saveEvent);
-		final Spinner  categories  = root.findViewById(R.id.categoryAddEvents);
-		final Spinner  privacy     = root.findViewById(R.id.privacyAddEvents);
+		final Spinner  categories  = root.findViewById(R.id.categoryEvents);
+		final Spinner  privacy     = root.findViewById(R.id.privacyEvents);
 		location = root.findViewById(R.id.locationAddEvents);
 		//final Button button = root.findViewById(R.id.select_place);
 
@@ -299,12 +304,15 @@ public class AddEventsFragment extends Fragment {
 
 	private void saveInFirebase(String title, String description, String category, String location, boolean privacy, Date startTime, Date created, String uri, final ProgressBar bar) {
 
-		String     id      = FirebaseController.getInstance().getmAuth().getCurrentUser().getUid();
+		String     id      = FirebaseController.getInstance().getUserId();
 		EventModel event   = new EventModel(title, description, category, location, privacy, uri, id, startTime, created);
 		String     docName = title.replaceAll("\\s+", "") + startTime.hashCode();
 		event.setDocName(docName);
 
-		FirebaseController.getInstance().getEventsCollectionReference().document(docName)
+		//TODO Add SuccessListener
+		daoEvents.save(event);
+
+		/*FirebaseController.getInstance().getEventsCollectionReference().document(docName)
 				.set(event)
 				.addOnSuccessListener(new OnSuccessListener<Void>() {
 					@Override
@@ -319,6 +327,6 @@ public class AddEventsFragment extends Fragment {
 						Toast.makeText(getActivity(), "Error to save in Database!", Toast.LENGTH_SHORT).show();
 						Log.w(TAG, "Error adding document", e);
 					}
-				});
+				});*/
 	}
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.uni.lu.eventmanager.R;
 import com.uni.lu.eventmanager.authentication.EmailLogin;
+import com.uni.lu.eventmanager.authentication.GoogleLogin;
 import com.uni.lu.eventmanager.controller.FirebaseController;
 import com.uni.lu.eventmanager.controller.LoginCodes;
 
@@ -20,10 +22,12 @@ public class LoginActivity extends AppCompatActivity {
 
 	private Button    mBtnLogin;
 	private TextView  mBtnRegister;
+	public ImageView mGoogleLogin;
 	private TextView  email;
 	private TextView  password;
 
 	private EmailLogin  emailLogin;
+	private GoogleLogin googleLogin;
 
 	FirebaseAuth firebaseAuth;
 
@@ -34,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
 		mBtnRegister = findViewById(R.id.registerUser);
 		mBtnLogin = findViewById(R.id.btnLogin);
+		mGoogleLogin = findViewById(R.id.googleLogin);
 		email = findViewById(R.id.email);
 		password = findViewById(R.id.password);
 
@@ -52,6 +57,14 @@ public class LoginActivity extends AppCompatActivity {
 				overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
 			}
 		});
+
+		mGoogleLogin.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				googleLogin = new GoogleLogin( LoginActivity.this, getString(R.string.default_web_client_id));
+				googleLogin.signInGoogle();
+			}
+		});
 	}
 
 	@Override
@@ -60,6 +73,9 @@ public class LoginActivity extends AppCompatActivity {
 		//TODO Add loading bar, once design be ready
 		if (requestCode == LoginCodes.RC_SIGN_IN_EMAIL || requestCode == LoginCodes.RC_SIGN_IN_CREATE) {
 			emailLogin.login(email.getText().toString(), password.getText().toString(), requestCode);
+		}
+		if (requestCode == LoginCodes.RC_SIGN_IN_GOOGLE ) {
+			googleLogin.loginGoogle(data);
 		}
 
 	}

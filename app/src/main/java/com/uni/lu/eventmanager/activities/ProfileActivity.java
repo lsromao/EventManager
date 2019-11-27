@@ -57,7 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
 						.fitCenter()
 						.circleCrop()
 						.error(R.drawable.ic_user)
-						.placeholder(R.drawable.ic_user))
+						.placeholder(R.drawable.ic_user).override(60,60))
 				.load(FirebaseController.getInstance().getmAuth().getCurrentUser().getPhotoUrl())
 				.into(ivBasicImage);
 
