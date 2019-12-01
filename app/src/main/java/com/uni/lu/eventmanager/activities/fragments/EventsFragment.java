@@ -57,6 +57,8 @@ public class EventsFragment extends Fragment implements OnItemListener {
 	}
 
 	private void setRecyclerView() {
+
+		//TODO Abstract for DAOs
 		Query query = FirebaseController.getInstance().getEventsCollectionReference()
 				.whereEqualTo("privacy", false)
 				.orderBy("startDate", Query.Direction.DESCENDING);

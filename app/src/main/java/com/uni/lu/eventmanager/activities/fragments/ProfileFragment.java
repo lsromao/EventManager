@@ -1,42 +1,27 @@
 package com.uni.lu.eventmanager.activities.fragments;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.shivtechs.maplocationpicker.MapUtility;
 import com.uni.lu.eventmanager.R;
 import com.uni.lu.eventmanager.controller.FirebaseController;
-import com.uni.lu.eventmanager.media.GlideApp;
-import com.uni.lu.eventmanager.model.EventModel;
 import com.uni.lu.eventmanager.util.Gallery;
 
 import java.io.IOException;
-import java.util.Date;
 
 public class ProfileFragment extends Fragment {
 
@@ -101,7 +86,7 @@ public class ProfileFragment extends Fragment {
 			try {
 				Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), filePath);
 				profile.setImageBitmap(bitmap);
-				uploadImage();
+				//uploadImage();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -129,7 +114,7 @@ public class ProfileFragment extends Fragment {
 	}
 
 
-	private void uploadImage() {
+	/*private void uploadImage() {
 
 		if(filePath != null)
 		{
@@ -196,7 +181,7 @@ public class ProfileFragment extends Fragment {
 						}
 					});
 		}
-	}
+	}*/
 
 
 	private void pickFromGallery() {

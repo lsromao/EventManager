@@ -31,6 +31,12 @@
                             android:scaleType="fitXY"
                             app:srcCompat="@android:color/white" />
 
+                        <ImageView
+                            android:id="@+id/iconEditCover"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_edit_picture" />
+
                         <View
                             android:id="@+id/divider7"
                             android:layout_width="match_parent"
@@ -129,6 +135,33 @@
                                     android:layout_weight="1"
                                     android:focusableInTouchMode="false"
                                     android:gravity="center_horizontal" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/eventStartDateLayoutEdit"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_margin="0dp"
+                            android:visibility="gone">
+
+                                <EditText
+                                    android:id="@+id/startDateEvents"
+                                    android:layout_width="195dp"
+                                    android:layout_height="match_parent"
+                                    android:focusableInTouchMode="false"
+                                    android:gravity="center_horizontal"
+                                    android:hint="Start Date" />
+
+                                <EditText
+                                    android:id="@+id/startTimeEvents"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:focusableInTouchMode="false"
+                                    android:gravity="center_horizontal"
+                                    android:hint="Start Time" />
+
 
                         </LinearLayout>
 

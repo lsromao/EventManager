@@ -1,5 +1,6 @@
 package com.uni.lu.eventmanager.dao;
 
+import com.google.android.gms.tasks.Task;
 import com.uni.lu.eventmanager.model.CommentModel;
 
 public class CommentsDAOFirestore extends DAO<CommentModel> {
@@ -7,10 +8,11 @@ public class CommentsDAOFirestore extends DAO<CommentModel> {
 	private final String collection = "comments";
 
 	@Override
-	public void save(CommentModel pojo) {
-		getSessionFirestore()
+	public Task<Void> save(CommentModel pojo) {
+		return getSessionFirestore()
 				.collection(this.collection)
-				.add(pojo);
+				.document(pojo.getEventDocument())
+				.set(pojo);
 	}
 
 	@Override

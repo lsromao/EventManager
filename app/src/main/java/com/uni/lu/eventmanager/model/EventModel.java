@@ -7,18 +7,19 @@ import java.util.Date;
 
 public class EventModel implements Parcelable {
 
-	private String docName;
-	private String                  title;
-	private String                  description;
-	private String                  category;
-	private String                  location;
-	private boolean                 privacy;
-	private String                  uriCover;
-	private String                  userId;
-	private Date                    startDate;
-	private Date                    created;
+	private String  docName;
+	private String  title;
+	private String  description;
+	private String  category;
+	private String  location;
+	private boolean privacy;
+	private String  uriCover;
+	private String  userId;
+	private Date    startDate;
+	private Date    created;
 
-	public EventModel(){}
+	public EventModel() {
+	}
 
 	public EventModel(String title, String description, String category, String location,
 	                  boolean privacy, String uriCover, String userId, Date startDate, Date created) {

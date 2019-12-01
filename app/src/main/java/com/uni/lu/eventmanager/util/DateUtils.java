@@ -1,11 +1,12 @@
 package com.uni.lu.eventmanager.util;
 
 import android.icu.text.SimpleDateFormat;
+import android.icu.util.Calendar;
 
 import java.text.ParseException;
 import java.util.Date;
 
-public class DateFormats {
+public class DateUtils {
 
 	public static final int DATE = 001;
 	public static final int TIME = 002;
@@ -15,6 +16,12 @@ public class DateFormats {
 
 	private final String outputFormat_Date  = "dd MMMM yyyy";
 	private final String outputFormat_Hours = "hh:mm a";
+
+	private Calendar calendar;
+
+	public DateUtils() {
+		this.calendar = Calendar.getInstance();
+	}
 
 
 	public String getDateTimeFormatted(String dateTime, int code) {
@@ -39,9 +46,9 @@ public class DateFormats {
 		return dateTime;
 	}
 
-	public Date getDateTime(String date, String time){
+	public Date getDateTime(String date, String time) {
 		String dateTime = date + " " + time;
-		Date   dt = null;
+		Date   dt       = null;
 		try {
 			dt = new SimpleDateFormat("dd MMMM yyyy hh:mm a").parse(dateTime);
 		} catch (ParseException e) {

@@ -34,8 +34,6 @@ public class ProfileActivity extends AppCompatActivity {
 		setSupportActionBar(toolbar);
 		DrawerLayout   drawer         = findViewById(R.id.drawer_layout);
 		NavigationView navigationView = findViewById(R.id.nav_view);
-		// Passing each menu ID as a set of Ids because each
-		// menu should be considered as top level destinations.
 		mAppBarConfiguration = new AppBarConfiguration.Builder(
 				R.id.nav_add_event, R.id.nav_profile,
 				R.id.nav_events, R.id.sign_out)
@@ -46,6 +44,8 @@ public class ProfileActivity extends AppCompatActivity {
 		NavigationUI.setupWithNavController(navigationView, navController);
 
 		View header = navigationView.getHeaderView(0);
+
+		//TODO: Abstract to a method to populate menu profile
 		TextView userEmail = header.findViewById(R.id.userEmail);
 		userEmail.setText(FirebaseController.getInstance().getmAuth().getCurrentUser().getEmail());
 		TextView userName = header.findViewById(R.id.userName);

@@ -1,8 +1,10 @@
 package com.uni.lu.eventmanager.dao;
 
+import com.google.android.gms.tasks.Task;
+
 public interface IDAO<T> {
 
-	void save(T pojo);
+	Task<Void> save(T pojo);
 	void delete(T pojo);
 	void update(T pojo);
 

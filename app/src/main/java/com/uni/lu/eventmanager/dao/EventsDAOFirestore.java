@@ -1,5 +1,6 @@
 package com.uni.lu.eventmanager.dao;
 
+import com.google.android.gms.tasks.Task;
 import com.uni.lu.eventmanager.model.EventModel;
 
 public class EventsDAOFirestore extends DAO<EventModel> {
@@ -7,10 +8,11 @@ public class EventsDAOFirestore extends DAO<EventModel> {
 	private final String collection = "events";
 
 	@Override
-	public void save(EventModel pojo) {
-		getSessionFirestore()
+	public Task<Void> save(EventModel pojo) {
+		return getSessionFirestore()
 				.collection(this.collection)
-				.add(pojo);
+				.document(pojo.getDocName())
+				.set(pojo);
 	}
 
 	@Override
