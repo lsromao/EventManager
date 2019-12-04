@@ -1,96 +1,69 @@
 package com.uni.lu.eventmanager.activities.fragments;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.uni.lu.eventmanager.R;
 import com.uni.lu.eventmanager.controller.FirebaseController;
+import com.uni.lu.eventmanager.media.GlideApp;
 import com.uni.lu.eventmanager.util.Gallery;
 
-import java.io.IOException;
-
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements View.OnClickListener  {
 
 
-	ImageView profile;
-	Uri filePath;
 	private Gallery gallery = new Gallery();
-	private static final String TAG = "DB Event";
-	private static final int GALLERY_REQUEST_CODE = 2;
-	private static final int ADDRESS_PICKER_REQUEST = 1020;
-	TextView location;
-	FirebaseStorage storage;
-	StorageReference storageReference;
+
+	private ImageView profilePic;
+	private ImageView iconChangePic;
+	private ImageView iconSave;
+	private ImageView iconCalcel;
+	private TextView userName;
+	private TextView userEmail;
+	private Button editProfile;
 
 	public View onCreateView(@NonNull LayoutInflater inflater,
-							 ViewGroup container, Bundle savedInstanceState) {
+	                         ViewGroup container, Bundle savedInstanceState) {
 
 
 		View root = inflater.inflate(R.layout.fragment_profile, container, false);
 
-		profile = root.findViewById(R.id.pictureProfile);
+		profilePic = root.findViewById(R.id.pictureProfile);
 
-		profile.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				chooseImage();
-			}
-		});
+		userName = root.findViewById(R.id.userNameProfile);
+		userEmail = root.findViewById(R.id.emailProfile);
+		editProfile = root.findViewById(R.id.editProfileButton);
+		iconSave = root.findViewById(R.id.profileIconAccept);
+		iconCalcel = root.findViewById(R.id.profileIconCancel);
+		iconChangePic = root.findViewById(R.id.iconEditProfilePic);
 
-//		GlideApp.with(this)
-//				.setDefaultRequestOptions(new RequestOptions()
-//						.override(450,450)
-//						.fitCenter()
-//						.circleCrop()
-//						.error(R.drawable.ic_user)
-//						.placeholder(R.drawable.ic_user))
-//				.load(FirebaseController.getInstance().getUserImageUrl())
-//				.into(profile);
+		loadProfile();
 
-		TextView name = root.findViewById(R.id.userNameProfile);
-		name.setText(FirebaseController.getInstance().getUserName());
+		editProfile.setOnClickListener(this);
+		iconChangePic.setOnClickListener(this);
+		iconSave.setOnClickListener(this);
+		iconCalcel.setOnClickListener(this);
 
-		TextView email = root.findViewById(R.id.emailProfile);
-		email.setText(FirebaseController.getInstance().getUserEmail());
 
 		return root;
-	}
-
-	private void chooseImage() {
-		Intent intent = new Intent();
-		intent.setType("image/*");
-		intent.setAction(Intent.ACTION_GET_CONTENT);
-		startActivityForResult(Intent.createChooser(intent, "Select Picture"), 71);
 	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		if (requestCode == 71 && resultCode == Activity.RESULT_OK
-				&& data != null && data.getData() != null) {
-			filePath = data.getData();
-			try {
-				Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), filePath);
-				profile.setImageBitmap(bitmap);
-				//uploadImage();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+
+	}
 
 //		//Image to FireStore
 //		StorageReference storageRef    = FirebaseStorage.getInstance().getReference();
@@ -111,8 +84,62 @@ public class ProfileFragment extends Fragment {
 //			}
 //		});
 
+	private void editOn(){
+		userName.setEnabled(true);
+		userName.setFocusableInTouchMode(true);
+
+		userEmail.setEnabled(true);
+		userEmail.setFocusableInTouchMode(true);
+
+		iconChangePic.setVisibility(View.VISIBLE);
+		iconSave.setVisibility(View.VISIBLE);
+		iconCalcel.setVisibility(View.VISIBLE);
+
 	}
 
+	private void editOff(){
+		userName.setEnabled(false);
+		userName.setFocusableInTouchMode(false);
+
+		userEmail.setEnabled(false);
+		userEmail.setFocusableInTouchMode(false);
+
+		iconChangePic.setVisibility(View.GONE);
+		iconSave.setVisibility(View.GONE);
+		iconCalcel.setVisibility(View.GONE);
+
+	}
+
+	private void loadProfile(){
+
+		String picture = FirebaseController.getInstance().getUserImageUrl();
+
+		userName.setText(FirebaseController.getInstance().getUserName());
+		userEmail.setText(FirebaseController.getInstance().getUserEmail());
+		if (picture.equals("")){
+			GlideApp.with(this)
+					.setDefaultRequestOptions(new RequestOptions()
+							.override(450,450)
+							.fitCenter()
+							.circleCrop()
+							.error(R.drawable.ic_user)
+							.placeholder(R.drawable.ic_user))
+					.load(R.drawable.ic_user)
+					.into(profilePic);
+		}else{
+			StorageReference gsReference = FirebaseStorage.getInstance().getReferenceFromUrl(picture);
+			GlideApp.with(this)
+					.setDefaultRequestOptions(new RequestOptions()
+							.override(450,450)
+							.fitCenter()
+							.circleCrop()
+							.error(R.drawable.ic_user)
+							.placeholder(R.drawable.ic_user))
+					.load(gsReference)
+					.into(profilePic);
+		}
+
+	}
 
 	/*private void uploadImage() {
 
@@ -184,15 +211,21 @@ public class ProfileFragment extends Fragment {
 	}*/
 
 
-	private void pickFromGallery() {
-		//Create an Intent with action as ACTION_PICK
-		Intent intent = new Intent(Intent.ACTION_PICK);
-		// Sets the type as image/*. This ensures only components of type image are selected
-		intent.setType("image/*");
-		//We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
-		String[] mimeTypes = {"image/jpeg", "image/png"};
-		intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
-		// Launching the Intent
-		startActivityForResult(intent, GALLERY_REQUEST_CODE);
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+			case R.id.editProfileButton:
+				editOn();
+				break;
+			case R.id.profileIconCancel:
+				loadProfile();
+				editOff();
+				break;
+			case R.id.profileIconAccept:
+				break;
+			case R.id.iconEditProfilePic:
+				startActivityForResult(Intent.createChooser(gallery.pickFromGallery(), "Select picture"), Gallery.GALLERY_REQUEST_CODE);
+				break;
+		}
 	}
 }

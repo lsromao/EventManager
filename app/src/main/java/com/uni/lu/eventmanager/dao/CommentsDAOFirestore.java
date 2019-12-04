@@ -17,15 +17,11 @@ public class CommentsDAOFirestore extends DAO<CommentModel> {
 
 	@Override
 	public void delete(CommentModel pojo) {
-		getSessionFirestore()
-				.collection(this.collection)
-				.document(pojo.getEventDocument())// TODO: Add Document name in firebase
-				.delete();
-
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
-	public void update(CommentModel pojo) {
-
+	public Task<Void> update(CommentModel pojo) {
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }

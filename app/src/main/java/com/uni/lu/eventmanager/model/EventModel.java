@@ -21,8 +21,9 @@ public class EventModel implements Parcelable {
 	public EventModel() {
 	}
 
-	public EventModel(String title, String description, String category, String location,
+	public EventModel(String docName, String title, String description, String category, String location,
 	                  boolean privacy, String uriCover, String userId, Date startDate, Date created) {
+		this.docName = docName;
 		this.title = title;
 		this.description = description;
 		this.category = category;

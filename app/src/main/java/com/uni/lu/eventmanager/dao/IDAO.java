@@ -6,6 +6,6 @@ public interface IDAO<T> {
 
 	Task<Void> save(T pojo);
 	void delete(T pojo);
-	void update(T pojo);
+	Task<Void> update(T pojo);
 
 }

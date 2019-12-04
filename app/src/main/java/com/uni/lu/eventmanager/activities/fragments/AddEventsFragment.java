@@ -40,7 +40,7 @@ import com.uni.lu.eventmanager.util.Gallery;
 import com.uni.lu.eventmanager.util.MapsUtil;
 import com.uni.lu.eventmanager.util.Privacy;
 
-import java.util.Date;
+import java.util.Random;
 
 public class AddEventsFragment extends Fragment implements View.OnClickListener {
 
@@ -197,53 +197,39 @@ public class AddEventsFragment extends Fragment implements View.OnClickListener 
 	}
 
 	private void createEvent() {
-		Date today = new Date();
 
-		if (startDate.getText().toString().length() < 1) {
-			Toast.makeText(getActivity(), "Start Date cannot be empty!", Toast.LENGTH_SHORT).show();
-			Log.w(TAG, "Error Event: Start Date empty!");
-		} else if (startTime.getText().toString().length() < 1) {
-			Toast.makeText(getActivity(), "Start Time cannot be empty!", Toast.LENGTH_SHORT).show();
-			Log.w(TAG, "Error Event: Start Time empty!");
-		} else {
-			Date start = dtFormat.getDateTime(startDate.getText().toString(), startTime.getText().toString());
-			if (start.before(today)) {
-				Toast.makeText(getActivity(), "Start date cannot be in the past!", Toast.LENGTH_SHORT).show();
-				Log.w(TAG, "Error Event: Start date in the past");
-			} else {
-				EventModel event = new EventModel(
-						title.getText().toString(),
-						description.getText().toString(),
-						categories.getSelectedItem().toString(),
-						location.getText().toString(),
-						!privacy.getSelectedItem().toString().equals("Public"),
-						gallery.getUrlTemp().toString(),
-						FirebaseController.getInstance().getUserId(),
-						start,
-						today
-				);
-				//TODO Change dates to be in Event Controller
-				if (eventsController.eventValidation(getActivity(), event)) {
-					bar.setVisibility(View.VISIBLE);
-					fireStorageController.saveCoverPicture(event, gallery);
-					eventsController.saveEvent()
-							.addOnSuccessListener(new OnSuccessListener<Void>() {
-								@Override
-								public void onSuccess(Void aVoid) {
-									bar.setVisibility(View.GONE);
-									getFragmentManager().popBackStackImmediate();
-								}
-							})
-							.addOnFailureListener(new OnFailureListener() {
-								@Override
-								public void onFailure(@NonNull Exception e) {
-									bar.setVisibility(View.GONE);
-									Toast.makeText(getActivity(), "Error to save in Database!", Toast.LENGTH_SHORT).show();
-									Log.w(TAG, "Error adding document", e);
-								}
-							});
-				}
-			}
+		EventModel event = new EventModel(
+				"events-" + + new Random().nextInt(200000),
+				title.getText().toString(),
+				description.getText().toString(),
+				categories.getSelectedItem().toString(),
+				location.getText().toString(),
+				!privacy.getSelectedItem().toString().equals("Public"),
+				gallery.getUrlTemp().toString(),
+				FirebaseController.getInstance().getUserId(),
+				null,
+				null
+		);
+
+		if (eventsController.eventValidation(getActivity(), event, startDate.getText().toString(), startTime.getText().toString())) {
+			bar.setVisibility(View.VISIBLE);
+			fireStorageController.saveCoverPicture(event, gallery);
+			eventsController.saveEvent()
+					.addOnSuccessListener(new OnSuccessListener<Void>() {
+						@Override
+						public void onSuccess(Void aVoid) {
+							bar.setVisibility(View.GONE);
+							getFragmentManager().popBackStackImmediate();
+						}
+					})
+					.addOnFailureListener(new OnFailureListener() {
+						@Override
+						public void onFailure(@NonNull Exception e) {
+							bar.setVisibility(View.GONE);
+							Toast.makeText(getActivity(), "Error to save in Database!", Toast.LENGTH_SHORT).show();
+							Log.w(TAG, "Error adding document", e);
+						}
+					});
 		}
 	}
 }

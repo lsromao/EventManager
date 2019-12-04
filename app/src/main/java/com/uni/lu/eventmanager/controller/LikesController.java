@@ -9,6 +9,8 @@ import com.uni.lu.eventmanager.media.GlideApp;
 import com.uni.lu.eventmanager.model.EventModel;
 import com.uni.lu.eventmanager.model.LikeModel;
 
+import java.util.Random;
+
 public class LikesController {
 
 	private LikesDAOFirestore likeDao;
@@ -27,9 +29,7 @@ public class LikesController {
 	public void likeEvent(Activity activity, EventModel event, ImageView like) {
 		if (this.like == null){
 			LikeModel likeModel = new LikeModel(event.getCategory(), event.getTitle(), event.getUserId());
-			likeModel.setDocName(
-					event.getTitle().replaceAll("\\s+", "") +
-					event.getUserId());
+			likeModel.setDocName("liked-" + new Random().nextInt(1000));
 
 			likeDao.save(likeModel);
 
@@ -37,9 +37,7 @@ public class LikesController {
 			changeIconLike(like, activity);
 		}else {
 			LikeModel likeModel = new LikeModel(event.getCategory(), event.getTitle(), event.getUserId());
-			likeModel.setDocName(
-					event.getTitle().replaceAll("\\s+", "") +
-					event.getUserId());
+			likeModel.setDocName("liked-" + new Random().nextInt(1000));
 
 			likeDao.delete(likeModel);
 

@@ -12,6 +12,8 @@ import com.google.firebase.storage.UploadTask;
 import com.uni.lu.eventmanager.model.EventModel;
 import com.uni.lu.eventmanager.util.Gallery;
 
+import java.util.Random;
+
 public class FireStorageController {
 
 	private static final String TAG = "StorageReference Event";
@@ -22,11 +24,11 @@ public class FireStorageController {
 		this.storageRef = FirebaseStorage.getInstance().getReference();
 	}
 
-	public EventModel saveCoverPicture(final EventModel event, Gallery gallery) {
+	public EventModel saveCoverPicture(EventModel event, Gallery gallery) {
 		StorageReference eventCoverRef = storageRef.child(
 				"event/" + event.getTitle().replaceAll("\\s+", "") + event.getStartDate().hashCode());
 
-		final String location = eventCoverRef.toString();
+		event.setUriCover(eventCoverRef.toString());
 
 		eventCoverRef.putFile(gallery.getUrlTemp())
 				.addOnFailureListener(new OnFailureListener() {
@@ -38,11 +40,35 @@ public class FireStorageController {
 				}).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
 			@Override
 			public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-				event.setUriCover(location);
 				Log.w(TAG, "saveCoverPicture:success");
 			}
 		});
 
+
+
 		return event;
+	}
+
+	public void saveProfilePic(Gallery gallery) {
+		StorageReference profileCoverRef = storageRef.child(
+				"profile_pictures/" + FirebaseController.getInstance().getUserId() + new Random().nextInt(6000));
+
+		//event.setUriCover(profileCoverRef.toString());
+
+		profileCoverRef.putFile(gallery.getUrlTemp())
+				.addOnFailureListener(new OnFailureListener() {
+					@Override
+					public void onFailure(@NonNull Exception exception) {
+						Log.w(TAG, "saveProfilePic:failure", exception);
+
+					}
+				}).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+			@Override
+			public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+				Log.w(TAG, "saveProfilePic:success");
+			}
+		});
+
+
 	}
 }

@@ -16,7 +16,7 @@ public class CommentsController {
 	}
 
 	public Task<Void> saveComment(EventModel event, String comment){
-		String docName = event.getTitle().replaceAll("\\s+", "") + new Random().nextInt(1000);
+		String docName = "comments-" + new Random().nextInt(1000);
 
 		CommentModel commentModel = new CommentModel(comment, docName, event.getDocName(), event.getUserId());
 

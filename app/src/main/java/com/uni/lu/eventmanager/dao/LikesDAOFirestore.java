@@ -27,8 +27,8 @@ public class LikesDAOFirestore extends DAO<LikeModel> {
 	}
 
 	@Override
-	public void update(LikeModel pojo) {
-
+	public Task<Void> update(LikeModel pojo) {
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	public LikeModel search(String eventDocument, String userId){

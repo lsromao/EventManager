@@ -17,15 +17,11 @@ public class EventsDAOFirestore extends DAO<EventModel> {
 
 	@Override
 	public void delete(EventModel pojo) {
-		getSessionFirestore()
-				.collection(this.collection)
-				.document(pojo.getDocName())
-				.delete();
-
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
-	public void update(EventModel pojo) {
-
+	public Task<Void> update(EventModel pojo) {
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }

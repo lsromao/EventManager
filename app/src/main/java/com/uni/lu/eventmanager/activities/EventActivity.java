@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,12 +34,15 @@ import com.shivtechs.maplocationpicker.MapUtility;
 import com.uni.lu.eventmanager.R;
 import com.uni.lu.eventmanager.adapter.CommentAdapter;
 import com.uni.lu.eventmanager.controller.CommentsController;
+import com.uni.lu.eventmanager.controller.EventsController;
+import com.uni.lu.eventmanager.controller.FireStorageController;
 import com.uni.lu.eventmanager.controller.FirebaseController;
 import com.uni.lu.eventmanager.controller.LikesController;
 import com.uni.lu.eventmanager.media.GlideApp;
 import com.uni.lu.eventmanager.model.CommentModel;
 import com.uni.lu.eventmanager.model.EventModel;
 import com.uni.lu.eventmanager.util.Categories;
+import com.uni.lu.eventmanager.util.DateUtils;
 import com.uni.lu.eventmanager.util.Gallery;
 import com.uni.lu.eventmanager.util.MapsUtil;
 import com.uni.lu.eventmanager.util.Privacy;
@@ -51,30 +55,35 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 
 	private ProgressBar bar;
 
-	private EditText  title;
-	private EditText  start;
-	private EditText  location;
-	private EditText  desc;
-	private EditText  cat;
-	private EditText  comment;
-	private Button    saveComment;
-	private Button    editEvent;
-	private ImageView iconAccept;
-	private ImageView iconCancel;
-	private ImageView iconDelete;
-	private ImageView iconEditPicture;
-	private ImageView like;
-	private ImageView cover;
-	private ImageView iconCategory;
-	private ImageView eventClockIcon;
-	private Spinner   categories;
-	private Spinner   privacy;
+	private EditText     title;
+	private EditText     start;
+	private EditText     location;
+	private EditText     desc;
+	private EditText     cat;
+	private EditText     comment;
+	private TextView     startDate;
+	private TextView     startTime;
+	private Button       saveComment;
+	private Button       editEvent;
+	private ImageView    iconAccept;
+	private ImageView    iconCancel;
+	private ImageView    iconDelete;
+	private ImageView    iconEditPicture;
+	private ImageView    like;
+	private ImageView    cover;
+	private ImageView    iconCategory;
+	private ImageView    eventClockIcon;
+	private Spinner      categories;
+	private Spinner      privacy;
 	private LinearLayout startTimeEdit;
 
-	private LikesController likesController;
-	private CommentsController commentsController;
+	private     LikesController       likesController;
+	private     CommentsController    commentsController;
+	private     EventsController      eventsController;
+	private FireStorageController fireStorageController;
 
-	private Gallery gallery;
+
+	private Gallery  gallery;
 	private MapsUtil maps;
 
 	@Override
@@ -88,6 +97,8 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 		maps = new MapsUtil();
 
 		commentsController = new CommentsController();
+		eventsController = new EventsController();
+		fireStorageController = new FireStorageController();
 
 		likesController = new LikesController();
 		likesController.isLiked(event.getTitle(), event.getUserId());
@@ -113,6 +124,8 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 		cover = findViewById(R.id.eventCover);
 		bar = findViewById(R.id.progressBarEvents);
 		startTimeEdit = findViewById(R.id.eventStartDateLayoutEdit);
+		startDate = findViewById(R.id.startDateEvents);
+		startTime = findViewById(R.id.startTimeEvents);
 		eventClockIcon = findViewById(R.id.eventClockIcon);
 
 		categories.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Categories.CategoriesOptions.values()));
@@ -126,11 +139,14 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 
 		like.setOnClickListener(this);
 		editEvent.setOnClickListener(this);
+		iconAccept.setOnClickListener(this);
 		iconCancel.setOnClickListener(this);
 		iconDelete.setOnClickListener(this);
 		iconEditPicture.setOnClickListener(this);
 		saveComment.setOnClickListener(this);
 		location.setOnClickListener(this);
+		startDate.setOnClickListener(this);
+		startTime.setOnClickListener(this);
 
 		setRecyclerView();
 
@@ -163,7 +179,7 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 			commentsController.saveComment(this.event, cc)
 					.addOnSuccessListener(new OnSuccessListener<Void>() {
 						@Override
-						public void onSuccess(Void aVoid){
+						public void onSuccess(Void aVoid) {
 							Log.d(TAG, "Comment saved");
 							bar.setVisibility(View.GONE);
 							EditText comment = findViewById(R.id.eventAddComments);
@@ -277,7 +293,7 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 		start.setVisibility(View.VISIBLE);
 	}
 
-	private void delete(){
+	private void delete() {
 		alertMessageForDelete();
 	}
 
@@ -293,6 +309,59 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 		location.setText(event.getLocation());
 		desc.setText(event.getDescription());
 		cat.setText(event.getCategory());
+	}
+
+	private void selectDateTimePicker(int code) {
+		eventsController.getDtFormat().selectDateTimePicker(code, startDate, startTime, this);
+	}
+
+	private void saveChanges() {
+		boolean isNewCover = true;
+		if (gallery.getUrlTemp() == null){
+			gallery.setUrlTemp(Uri.parse(event.getUriCover()));
+			isNewCover = false;
+		}
+
+		final EventModel eventMdl = new EventModel(
+				event.getDocName(),
+				title.getText().toString(),
+				desc.getText().toString(),
+				categories.getSelectedItem().toString(),
+				location.getText().toString(),
+				!privacy.getSelectedItem().toString().equals("Public"),
+				gallery.getUrlTemp().toString(),
+				FirebaseController.getInstance().getUserId(),
+				null,
+				null
+		);
+
+		if (eventsController.eventValidation(this, eventMdl, startDate.getText().toString(), startTime.getText().toString())) {
+			bar.setVisibility(View.VISIBLE);
+			if (isNewCover){
+				fireStorageController.saveCoverPicture(eventMdl, gallery);
+			}
+			eventsController.saveEvent()
+					.addOnSuccessListener(new OnSuccessListener<Void>() {
+						@Override
+						public void onSuccess(Void aVoid) {
+							bar.setVisibility(View.GONE);
+							Toast.makeText(EventActivity.this, "Update in Database!", Toast.LENGTH_SHORT).show();
+							 event = eventMdl;
+							 event.setStartDate(eventsController.getEvent().getStartDate());
+							 editOff();
+						}
+					})
+					.addOnFailureListener(new OnFailureListener() {
+						@Override
+						public void onFailure(@NonNull Exception e) {
+							bar.setVisibility(View.GONE);
+							Toast.makeText(EventActivity.this, "Error to update in Database!", Toast.LENGTH_SHORT).show();
+							Log.w(TAG, "Error adding document", e);
+						}
+					});
+		}
+
+
 	}
 
 	@Override
@@ -339,6 +408,9 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 				loadOriginalInformation();
 				editOff();
 				break;
+			case R.id.eventIconAccept:
+				saveChanges();
+				break;
 			case R.id.iconEditCover:
 				startActivityForResult(Intent.createChooser(gallery.pickFromGallery(), "Select picture"), Gallery.GALLERY_REQUEST_CODE);
 				break;
@@ -346,7 +418,16 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 				saveComment();
 				break;
 			case R.id.eventLocation:
-				maps.getCurrentPlaceItems(this);
+				Intent map = maps.getCurrentPlaceItems(this);
+				if (map != null) {
+					startActivityForResult(maps.getCurrentPlaceItems(this), MapsUtil.ADDRESS_PICKER_REQUEST);
+				}
+				break;
+			case R.id.startDateEvents:
+				selectDateTimePicker(DateUtils.DATE);
+				break;
+			case R.id.startTimeEvents:
+				selectDateTimePicker(DateUtils.TIME);
 				break;
 		}
 	}
