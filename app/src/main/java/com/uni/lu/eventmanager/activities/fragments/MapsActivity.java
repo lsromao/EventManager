@@ -32,18 +32,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 android.util.Log.i("OnMapClick", "Horary!");
             }
         });
-//        mMap = googleMap;
-//        LatLng Luxembourg = new LatLng(21, 57);
-//        mMap.addMarker(new
-//                MarkerOptions().position(Luxembourg).title("Luxembourg"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(Luxembourg));
-//    }
-//
-//    @Override
-//    public void onMapClick(LatLng latLng) {
-//        {
-//            android.util.Log.i("onMapClick", "Horary!");
-//
-//        }
     }
 }

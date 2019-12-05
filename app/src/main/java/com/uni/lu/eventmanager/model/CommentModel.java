@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class CommentModel {
 
+	private String docName;
 	private String comment;
 	private String eventDocument;
 	private String userName;
@@ -13,11 +14,12 @@ public class CommentModel {
 	private String userPic;
 	private Date   date;
 
-	public CommentModel(String comment, String eventDocument){
+	public CommentModel(String comment, String docName, String eventDocument, String userId){
+		this.docName = docName;
 		this.comment = comment;
 		this.eventDocument = eventDocument;
 		this.userName = FirebaseController.getInstance().getUserName();
-		this.userId = FirebaseController.getInstance().getmAuth().getCurrentUser().getUid();
+		this.userId = userId;
 		this.userPic = FirebaseController.getInstance().getUserImageUrl();
 		this.date = new Date();
 	}
@@ -70,5 +72,13 @@ public class CommentModel {
 
 	public void setEventDocument(String eventDocument) {
 		this.eventDocument = eventDocument;
+	}
+
+	public String getDocName() {
+		return docName;
+	}
+
+	public void setDocName(String docName) {
+		this.docName = docName;
 	}
 }

@@ -23,6 +23,16 @@ public class FirebaseController {
 
     private GoogleSignInClient mGoogleSignInClient;
 
+    private boolean isProfileChanged;
+
+    public boolean isProfileChanged() {
+        return isProfileChanged;
+    }
+
+    public void setProfileChanged(boolean profileChanged) {
+        isProfileChanged = profileChanged;
+    }
+
     public FirebaseAuth getmAuth() {
         return mAuth;
     }

@@ -45,9 +45,20 @@
         android:background="#00FFFFFF" />
 
     <TextView
+        android:id="@+id/itemCommentName"
+        style="@style/AppTheme.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:focusableInTouchMode="false"
+        android:lines="5"
+        android:maxLength="100"
+        android:minLines="1" />
+
+    <TextView
         android:id="@+id/itemCommentDate"
         style="@style/AppTheme.Body1"
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:focusableInTouchMode="false"

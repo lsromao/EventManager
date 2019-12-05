@@ -19,7 +19,6 @@ public class RegisterActivity extends AppCompatActivity {
 
 	private EditText  userName;
 	private EditText  email;
-	private EditText  mobile;
 	private TextView  password;
 	private Button    btnRegister;
 
@@ -34,7 +33,6 @@ public class RegisterActivity extends AppCompatActivity {
 
 		userName = findViewById(R.id.editTextName);
 		email = findViewById(R.id.editTextEmail);
-		mobile = findViewById(R.id.editTextMobile);
 		password = findViewById(R.id.editTextPassword);
 		btnRegister = findViewById(R.id.cirRegisterButton);
 

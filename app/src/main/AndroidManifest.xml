@@ -30,10 +30,6 @@
         <activity android:name=".activities.EventActivity"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity
-            android:name=".activities.RegisterActivity"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".activities.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar" />

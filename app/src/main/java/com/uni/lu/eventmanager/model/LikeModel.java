@@ -1,19 +1,18 @@
 package com.uni.lu.eventmanager.model;
 
-import com.uni.lu.eventmanager.controller.FirebaseController;
-
 public class LikeModel {
 
+	private String docName;
 	private String userId;
 	private String category;
 	private String eventDocument;
 
 	public LikeModel(){}
 
-	public LikeModel(String category, String eventDocument){
+	public LikeModel(String category, String eventDocument, String userId){
 		this.category =category;
 		this.eventDocument = eventDocument;
-		this.userId = FirebaseController.getInstance().getUserId();
+		this.userId = userId;
 	}
 
 	public String getUserId() {
@@ -32,12 +31,19 @@ public class LikeModel {
 		this.category = category;
 	}
 
-
 	public String getEventDocument() {
 		return eventDocument;
 	}
 
 	public void setEventDocument(String eventDocument) {
 		this.eventDocument = eventDocument;
+	}
+
+	public String getDocName() {
+		return docName;
+	}
+
+	public void setDocName(String docName) {
+		this.docName = docName;
 	}
 }

@@ -31,6 +31,12 @@
                             android:scaleType="fitXY"
                             app:srcCompat="@android:color/white" />
 
+                        <ImageView
+                            android:id="@+id/iconEditCover"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_edit_picture" />
+
                         <View
                             android:id="@+id/divider7"
                             android:layout_width="match_parent"
@@ -55,14 +61,13 @@
                                     app:srcCompat="@drawable/ic_like"
                                     tools:srcCompat="@drawable/ic_like" />
 
-                                <TextView
+                                <EditText
                                     android:id="@+id/eventTitle"
                                     android:layout_width="309dp"
                                     android:layout_height="73dp"
                                     android:layout_weight="1"
                                     android:focusableInTouchMode="false"
                                     android:gravity="center_horizontal" />
-
                         </LinearLayout>
 
                         <View
@@ -89,13 +94,13 @@
                                     app:srcCompat="@drawable/ic_placeholder"
                                     tools:srcCompat="@drawable/ic_placeholder" />
 
-                                <TextView
+                                <EditText
                                     android:id="@+id/eventLocation"
                                     android:layout_width="125dp"
                                     android:layout_height="60dp"
                                     android:layout_weight="1"
                                     android:focusableInTouchMode="false"
-                                    android:gravity="center_horizontal" />
+                                    android:gravity="center_horizontal"/>
 
                         </LinearLayout>
 
@@ -123,13 +128,40 @@
                                     app:srcCompat="@drawable/ic_clock_circular"
                                     tools:srcCompat="@drawable/ic_clock_circular" />
 
-                                <TextView
+                                <EditText
                                     android:id="@+id/eventStartTime"
                                     android:layout_width="125dp"
                                     android:layout_height="60dp"
                                     android:layout_weight="1"
                                     android:focusableInTouchMode="false"
                                     android:gravity="center_horizontal" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/eventStartDateLayoutEdit"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_margin="0dp"
+                            android:visibility="gone">
+
+                                <EditText
+                                    android:id="@+id/startDateEvents"
+                                    android:layout_width="195dp"
+                                    android:layout_height="match_parent"
+                                    android:focusableInTouchMode="false"
+                                    android:gravity="center_horizontal"
+                                    android:hint="Start Date" />
+
+                                <EditText
+                                    android:id="@+id/startTimeEvents"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:focusableInTouchMode="false"
+                                    android:gravity="center_horizontal"
+                                    android:hint="Start Time" />
+
 
                         </LinearLayout>
 
@@ -143,13 +175,121 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/eventCover" />
 
-                        <TextView
+                        <LinearLayout
+                            android:id="@+id/eventCategoryLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="0dp">
+
+                                <ImageView
+                                    android:id="@+id/eventCategoryIcon"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:background="#00FFFFFF"
+                                    app:srcCompat="@drawable/ic_category"
+                                    tools:srcCompat="@drawable/ic_category" />
+
+                                <EditText
+                                    android:id="@+id/eventCategory"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:focusableInTouchMode="false"
+                                    android:gravity="center_horizontal" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/divider13"
+                            android:layout_width="match_parent"
+                            android:layout_height="17dp"
+                            android:background="#00FFFFFF"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/eventCover" />
+
+                        <EditText
                             android:id="@+id/eventDescription"
                             android:layout_width="match_parent"
                             android:layout_height="67dp"
                             android:layout_weight="1"
                             android:focusableInTouchMode="false"
                             android:gravity="center_horizontal" />
+
+                        <View
+                            android:id="@+id/divider12"
+                            android:layout_width="match_parent"
+                            android:layout_height="17dp"
+                            android:background="#00FFFFFF"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/eventCover" />
+
+                        <LinearLayout
+                            android:id="@+id/eventsSpinners"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="0dp">
+
+                                <Spinner
+                                    android:id="@+id/privacyEvents"
+                                    android:layout_width="188dp"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_horizontal"
+                                    android:visibility="gone" />
+
+                                <Spinner
+                                    android:id="@+id/categoryEvents"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center_horizontal"
+                                    android:visibility="gone" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/eventEditSaveLayout"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_margin="0dp">
+
+                                <Button
+                                    android:id="@+id/editEvent"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="right"
+                                    android:text="Edit"
+                                    android:visibility="gone" />
+
+                                <ImageView
+                                    android:id="@+id/eventIconAccept"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:visibility="gone"
+                                    app:srcCompat="@drawable/ic_accept" />
+
+                                <ImageView
+                                    android:id="@+id/eventIconCancel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:visibility="gone"
+                                    app:srcCompat="@drawable/ic_cancel" />
+
+                                <ImageView
+                                    android:id="@+id/eventIconDelete"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:visibility="gone"
+                                    app:srcCompat="@drawable/ic_delete" />
+
+                        </LinearLayout>
 
                         <View
                             android:id="@+id/divider11"

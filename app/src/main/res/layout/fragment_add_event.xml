@@ -114,19 +114,19 @@
                 android:background="#00FFFFFF" />
 
             <LinearLayout
-                android:id="@+id/addEventsSpinners"
+                android:id="@+id/eventsSpinners"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_margin="0dp">
 
                 <Spinner
-                    android:id="@+id/privacyAddEvents"
+                    android:id="@+id/privacyEvents"
                     android:layout_width="188dp"
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal" />
 
                 <Spinner
-                    android:id="@+id/categoryAddEvents"
+                    android:id="@+id/categoryEvents"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

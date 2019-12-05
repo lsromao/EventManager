@@ -36,6 +36,7 @@ public class CommentAdapter extends FirestoreRecyclerAdapter<CommentModel, Comme
 		//TODO Check
 		holder.setProfilePic(model.getUserPic());
 		holder.setDate(model.getDate().toString());
+		holder.setName(model.getUserName());
 	}
 
 	@NonNull

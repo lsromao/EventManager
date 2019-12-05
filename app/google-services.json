@@ -8,14 +8,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1092952934738:android:8f39a65854d97cc3dd928b",
+        "mobilesdk_app_id": "1:1092952934738:android:562863c143aa4725dd928b",
         "android_client_info": {
           "package_name": "com.uni.lu.eventmanager"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1092952934738-47d7ejftk585ich3sj42sqbiang1q396.apps.googleusercontent.com",
+          "client_id": "1092952934738-lhpu10bml93heu4kr9k2dm3693a4d42h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.uni.lu.eventmanager",
@@ -34,7 +34,7 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [   
+          "other_platform_oauth_client": [
             {
               "client_id": "1092952934738-m1n4oo0aoh4s1i8bk6hubnko1jestnjb.apps.googleusercontent.com",
               "client_type": 3
