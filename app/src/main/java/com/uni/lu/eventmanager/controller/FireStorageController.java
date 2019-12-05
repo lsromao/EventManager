@@ -49,11 +49,11 @@ public class FireStorageController {
 		return event;
 	}
 
-	public void saveProfilePic(Gallery gallery) {
+	public String saveProfilePic(Gallery gallery) {
 		StorageReference profileCoverRef = storageRef.child(
 				"profile_pictures/" + FirebaseController.getInstance().getUserId() + new Random().nextInt(6000));
 
-		//event.setUriCover(profileCoverRef.toString());
+		//event.setUriCover();
 
 		profileCoverRef.putFile(gallery.getUrlTemp())
 				.addOnFailureListener(new OnFailureListener() {
@@ -69,6 +69,6 @@ public class FireStorageController {
 			}
 		});
 
-
+		return profileCoverRef.toString();
 	}
 }

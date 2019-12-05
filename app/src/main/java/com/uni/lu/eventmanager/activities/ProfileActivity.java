@@ -17,6 +17,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.uni.lu.eventmanager.R;
 import com.uni.lu.eventmanager.controller.FirebaseController;
 import com.uni.lu.eventmanager.media.GlideApp;
@@ -24,6 +26,11 @@ import com.uni.lu.eventmanager.media.GlideApp;
 public class ProfileActivity extends AppCompatActivity {
 
 	private AppBarConfiguration mAppBarConfiguration;
+
+	View header;
+	ImageView ivBasicImage;
+	TextView userEmail;
+	TextView userName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,23 +50,16 @@ public class ProfileActivity extends AppCompatActivity {
 		NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
 		NavigationUI.setupWithNavController(navigationView, navController);
 
-		View header = navigationView.getHeaderView(0);
+		header = navigationView.getHeaderView(0);
 
 		//TODO: Abstract to a method to populate menu profile
-		TextView userEmail = header.findViewById(R.id.userEmail);
+		userEmail = header.findViewById(R.id.userEmail);
 		userEmail.setText(FirebaseController.getInstance().getmAuth().getCurrentUser().getEmail());
-		TextView userName = header.findViewById(R.id.userName);
+		userName = header.findViewById(R.id.userName);
 		userName.setText(FirebaseController.getInstance().getmAuth().getCurrentUser().getDisplayName());
 
-		ImageView ivBasicImage = header.findViewById(R.id.imageView);
-		GlideApp.with(this)
-				.setDefaultRequestOptions(new RequestOptions()
-						.fitCenter()
-						.circleCrop()
-						.error(R.drawable.ic_user)
-						.placeholder(R.drawable.ic_user).override(60,60))
-				.load(FirebaseController.getInstance().getmAuth().getCurrentUser().getPhotoUrl())
-				.into(ivBasicImage);
+		ivBasicImage = header.findViewById(R.id.imageView);
+		setProfilePic();
 
 		navigationView.getMenu().findItem(R.id.sign_out).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 			@Override
@@ -73,6 +73,12 @@ public class ProfileActivity extends AppCompatActivity {
 	@Override
 	public boolean onSupportNavigateUp() {
 		NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+
+		if(FirebaseController.getInstance().isProfileChanged()){
+			userName.setText(FirebaseController.getInstance().getmAuth().getCurrentUser().getDisplayName());
+			setProfilePic();
+		}
+
 		return NavigationUI.navigateUp(navController, mAppBarConfiguration)
 		       || super.onSupportNavigateUp();
 	}
@@ -91,5 +97,31 @@ public class ProfileActivity extends AppCompatActivity {
 		home.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		startActivity(home);
 		finish();
+	}
+
+	private void setProfilePic()
+	{
+		String pic = FirebaseController.getInstance().getUserImageUrl();
+
+		if(pic.isEmpty()){
+			GlideApp.with(this)
+					.setDefaultRequestOptions(new RequestOptions()
+							.fitCenter()
+							.circleCrop()
+							.error(R.drawable.ic_user)
+							.placeholder(R.drawable.ic_user))
+					.load(R.drawable.ic_user)
+					.into(ivBasicImage);
+		}else{
+			StorageReference gsReference = FirebaseStorage.getInstance().getReferenceFromUrl(pic);
+			GlideApp.with(this)
+					.setDefaultRequestOptions(new RequestOptions()
+							.fitCenter()
+							.circleCrop()
+							.error(R.drawable.ic_user)
+							.placeholder(R.drawable.ic_user))
+					.load(gsReference)
+					.into(ivBasicImage);
+		}
 	}
 }
