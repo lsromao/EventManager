@@ -2,21 +2,20 @@ package com.uni.lu.eventmanager.authentication;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
+import android.net.Uri;
 import android.util.Log;
 import android.util.Patterns;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.uni.lu.eventmanager.R;
 import com.uni.lu.eventmanager.activities.ProfileActivity;
 import com.uni.lu.eventmanager.controller.FirebaseController;
 import com.uni.lu.eventmanager.controller.LoginCodes;
@@ -27,8 +26,9 @@ public class EmailLogin {
 
 	private static final String TAG = "Email Login";
 
+	private final String uri = "gs://misc-eventmanager.appspot.com/profile_pictures/default.png";
+
 	private Activity activity;
-	private String userName;
 
 	public EmailLogin(Activity activity) {
 		this.activity = activity;
@@ -39,16 +39,16 @@ public class EmailLogin {
 		activity.startActivityForResult(signInEmail, LoginCodes.RC_SIGN_IN_EMAIL);
 	}
 
-	public void register(String s) {
+	public void register() {
 		Intent signInEmail = new Intent(activity.getIntent());
 		activity.startActivityForResult(signInEmail, LoginCodes.RC_SIGN_IN_CREATE);
 	}
 
-	public void login(String email, String password, int code) {
+	public void login(String email, String password, String userName, int code) {
 		if (code == LoginCodes.RC_SIGN_IN_EMAIL) {
 			loginWithEmail(email, password);
 		} else if (code == LoginCodes.RC_SIGN_IN_CREATE) {
-			createUser(email, password);
+			createUser(email, password, userName);
 		}
 
 	}
@@ -84,7 +84,7 @@ public class EmailLogin {
 	}
 
 
-	private void createUser(String email, String password) {
+	private void createUser(String email, String password, final String userName) {
 		if (validatePassword(password)){
 			if (validateEmail(email)) {
 				FirebaseController.getInstance().getmAuth().createUserWithEmailAndPassword(email, password)
@@ -96,7 +96,9 @@ public class EmailLogin {
 									Log.d(TAG, "signInWithEmail:success");
 									FirebaseUser user = FirebaseController.getInstance().getmAuth().getCurrentUser();
 									UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-											.setDisplayName(userName).build();
+											.setDisplayName(userName)
+											.setPhotoUri(Uri.parse(uri))
+											.build();
 
 									user.updateProfile(profileUpdates)
 											.addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -104,12 +106,10 @@ public class EmailLogin {
 												public void onComplete(@NonNull Task<Void> task) {
 													if (task.isSuccessful()) {
 														Log.d(TAG, "User profile updated");
+														goToListPage();
 													}
 												}
 											});
-
-//									FirebaseController.getInstance().setmAuth(FirebaseAuth.getInstance());
-									goToListPage();
 								} else {
 									// If sign in fails, display a message to the user.
 									Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -117,7 +117,13 @@ public class EmailLogin {
 											Toast.LENGTH_SHORT).show();
 								}
 							}
-						});
+						})
+				.addOnFailureListener(new OnFailureListener() {
+					@Override
+					public void onFailure(@NonNull Exception e) {
+						Toast.makeText(activity, e.getMessage(), Toast.LENGTH_SHORT).show();
+					}
+				});
 			} else {
 				Toast.makeText(activity.getApplicationContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
 			}

@@ -67,7 +67,6 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 	private Button       editEvent;
 	private ImageView    iconAccept;
 	private ImageView    iconCancel;
-	private ImageView    iconDelete;
 	private ImageView    iconEditPicture;
 	private ImageView    like;
 	private ImageView    cover;
@@ -76,6 +75,8 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 	private Spinner      categories;
 	private Spinner      privacy;
 	private LinearLayout startTimeEdit;
+	private RecyclerView recyclerView;
+	private LinearLayout emptyView;
 
 	private     LikesController       likesController;
 	private     CommentsController    commentsController;
@@ -101,7 +102,7 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 		fireStorageController = new FireStorageController();
 
 		likesController = new LikesController();
-		likesController.isLiked(event.getTitle(), event.getUserId());
+		likesController.isLiked(event.getTitle());
 		like = findViewById(R.id.eventFavoriteIcon);
 		likesController.changeIconLike(like, EventActivity.this);
 
@@ -116,7 +117,6 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 		comment = findViewById(R.id.eventAddComments);
 		iconAccept = findViewById(R.id.eventIconAccept);
 		iconCancel = findViewById(R.id.eventIconCancel);
-		iconDelete = findViewById(R.id.eventIconDelete);
 		iconCategory = findViewById(R.id.eventCategoryIcon);
 		iconEditPicture = findViewById(R.id.iconEditCover);
 		categories = findViewById(R.id.categoryEvents);
@@ -127,6 +127,7 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 		startDate = findViewById(R.id.startDateEvents);
 		startTime = findViewById(R.id.startTimeEvents);
 		eventClockIcon = findViewById(R.id.eventClockIcon);
+		emptyView = findViewById(R.id.emptyViewComments);
 
 		categories.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Categories.CategoriesOptions.values()));
 		privacy.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Privacy.PrivacyOptions.values()));
@@ -141,7 +142,6 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 		editEvent.setOnClickListener(this);
 		iconAccept.setOnClickListener(this);
 		iconCancel.setOnClickListener(this);
-		iconDelete.setOnClickListener(this);
 		iconEditPicture.setOnClickListener(this);
 		saveComment.setOnClickListener(this);
 		location.setOnClickListener(this);
@@ -152,7 +152,6 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 
 		if (event.getUserId().equals(FirebaseController.getInstance().getUserId())) {
 			editEvent.setVisibility(View.VISIBLE);
-			iconDelete.setVisibility(View.VISIBLE);
 		}
 
 	}
@@ -208,9 +207,22 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 						.setQuery(query, CommentModel.class)
 						.build();
 
-		adapter = new CommentAdapter(options, this);
+		adapter = new CommentAdapter(options, this) {
+			@Override
+			public void onDataChanged() {
+				// Show/hide content if the query returns empty.
+				int a = getItemCount();
+				if (getItemCount() == 0) {
+					recyclerView.setVisibility(View.GONE);
+					emptyView.setVisibility(View.VISIBLE);
+				} else {
+					recyclerView.setVisibility(View.VISIBLE);
+					emptyView.setVisibility(View.GONE);
+				}
+			}
+		};
 
-		RecyclerView recyclerView = findViewById(R.id.recyclerComments);
+		recyclerView = findViewById(R.id.recyclerComments);
 		recyclerView.setHasFixedSize(true);
 		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 		recyclerView.setLayoutManager(linearLayoutManager);
@@ -277,6 +289,9 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 
 		desc.setEnabled(false);
 		desc.setFocusableInTouchMode(false);
+
+		cat.setEnabled(false);
+		cat.setFocusableInTouchMode(false);
 
 		iconCategory.setVisibility(View.VISIBLE);
 		cat.setVisibility(View.VISIBLE);
@@ -397,9 +412,6 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 		switch (v.getId()) {
 			case R.id.eventFavoriteIcon:
 				likesController.likeEvent(EventActivity.this, event, like);
-				break;
-			case R.id.eventIconDelete:
-				delete();
 				break;
 			case R.id.editEvent:
 				editOn();

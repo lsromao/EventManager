@@ -67,6 +67,7 @@
                                     android:layout_height="73dp"
                                     android:layout_weight="1"
                                     android:focusableInTouchMode="false"
+                                    android:textColor="@color/primary_text_color_selector"
                                     android:gravity="center_horizontal" />
                         </LinearLayout>
 
@@ -100,6 +101,7 @@
                                     android:layout_height="60dp"
                                     android:layout_weight="1"
                                     android:focusableInTouchMode="false"
+                                    android:textColor="@color/primary_text_color_selector"
                                     android:gravity="center_horizontal"/>
 
                         </LinearLayout>
@@ -134,6 +136,7 @@
                                     android:layout_height="60dp"
                                     android:layout_weight="1"
                                     android:focusableInTouchMode="false"
+                                    android:textColor="@color/primary_text_color_selector"
                                     android:gravity="center_horizontal" />
 
                         </LinearLayout>
@@ -160,6 +163,7 @@
                                     android:layout_weight="1"
                                     android:focusableInTouchMode="false"
                                     android:gravity="center_horizontal"
+                                    android:textColor="@color/primary_text_color_selector"
                                     android:hint="Start Time" />
 
 
@@ -195,6 +199,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:focusableInTouchMode="false"
+                                    android:textColor="@color/primary_text_color_selector"
                                     android:gravity="center_horizontal" />
 
                         </LinearLayout>
@@ -215,6 +220,7 @@
                             android:layout_height="67dp"
                             android:layout_weight="1"
                             android:focusableInTouchMode="false"
+                            android:textColor="@color/primary_text_color_selector"
                             android:gravity="center_horizontal" />
 
                         <View
@@ -281,14 +287,6 @@
                                     android:visibility="gone"
                                     app:srcCompat="@drawable/ic_cancel" />
 
-                                <ImageView
-                                    android:id="@+id/eventIconDelete"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:visibility="gone"
-                                    app:srcCompat="@drawable/ic_delete" />
-
                         </LinearLayout>
 
                         <View
@@ -329,7 +327,25 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recyclerComments"
                             android:layout_width="match_parent"
-                            android:layout_height="629dp" />
+                            android:layout_height="629dp"
+                            android:visibility="visible" />
+
+                        <LinearLayout
+                            android:id="@+id/emptyViewComments"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                                <TextView
+                                    style="@style/AppTheme.Body1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="@string/message_no_comments"
+                                    android:textColor="@color/greyDisabled" />
+
+                        </LinearLayout>
 
                 </LinearLayout>
 

@@ -12,7 +12,7 @@ import com.uni.lu.eventmanager.R;
 import com.uni.lu.eventmanager.model.EventModel;
 import com.uni.lu.eventmanager.view.EventViewHolder;
 
-public class EventAdapter extends FirestoreRecyclerAdapter<EventModel, EventViewHolder> {
+public abstract class EventAdapter extends FirestoreRecyclerAdapter<EventModel, EventViewHolder> {
 
 	private OnItemListener mOnItemListener;
 

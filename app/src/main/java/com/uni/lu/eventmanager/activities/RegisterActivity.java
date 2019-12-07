@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ public class RegisterActivity extends AppCompatActivity {
 	private EditText  email;
 	private TextView  password;
 	private Button    btnRegister;
+	private ProgressBar bar;
 
 	private EmailLogin  emailLogin;
 
@@ -48,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
 		btnRegister.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				emailLogin = new EmailLogin(RegisterActivity.this);
-				emailLogin.register(userName.getText().toString());
+				emailLogin.register();
 			}
 		});
 
@@ -58,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == LoginCodes.RC_SIGN_IN_CREATE) {
-			emailLogin.login(email.getText().toString(), password.getText().toString(), requestCode);
+			emailLogin.login(email.getText().toString(), password.getText().toString(), userName.getText().toString(), requestCode);
 		}
 	}
 }

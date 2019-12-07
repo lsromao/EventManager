@@ -69,7 +69,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 		iconSave.setOnClickListener(this);
 		iconCalcel.setOnClickListener(this);
 
-
+		editOff();
 		return root;
 	}
 
@@ -107,6 +107,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 	private void editOff() {
 		userName.setEnabled(false);
 		userName.setFocusableInTouchMode(false);
+
+		userEmail.setEnabled(false);
+		userEmail.setFocusableInTouchMode(false);
 
 		iconChangePic.setVisibility(View.GONE);
 		iconSave.setVisibility(View.GONE);

@@ -11,7 +11,7 @@ public class CommentsDAOFirestore extends DAO<CommentModel> {
 	public Task<Void> save(CommentModel pojo) {
 		return getSessionFirestore()
 				.collection(this.collection)
-				.document(pojo.getEventDocument())
+				.document(pojo.getDocName())
 				.set(pojo);
 	}
 

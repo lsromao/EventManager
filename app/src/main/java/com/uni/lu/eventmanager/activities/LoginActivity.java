@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		//TODO Add loading bar, once design be ready
 		if (requestCode == LoginCodes.RC_SIGN_IN_EMAIL || requestCode == LoginCodes.RC_SIGN_IN_CREATE) {
-			emailLogin.login(email.getText().toString(), password.getText().toString(), requestCode);
+			emailLogin.login(email.getText().toString(), password.getText().toString(), null, requestCode);
 		}
 		if (requestCode == LoginCodes.RC_SIGN_IN_GOOGLE ) {
 			googleLogin.loginGoogle(data);
