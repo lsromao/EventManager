@@ -115,12 +115,6 @@
         <item name="android:textSize">12sp</item>
     </style>
 
-
-    <style name="AppTheme.PizzaGuy">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">150dp</item>
-    </style>
-
     <style name="AppTheme.Subheader">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textSize">16sp</item>
@@ -159,9 +153,9 @@
 
 
     <string-array name="sort_by">
-        <item>@string/sort_by_rating</item>
+        <item>@string/sort_by_newest</item>
+        <item>@string/sort_by_oldest</item>
         <item>@string/sort_by_my_events</item>
-        <item>@string/sort_by_price</item>
     </string-array>
 
 </resources>

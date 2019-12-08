@@ -20,15 +20,15 @@ public class LikesController {
 		this.likeDao = new LikesDAOFirestore();
 	}
 
-	public boolean isLiked(String eventDocument, String userId){
-		this.like =  likeDao.search(eventDocument, userId);
+	public boolean isLiked(String eventDocument){
+		this.like =  likeDao.search(eventDocument, FirebaseController.getInstance().getUserId());
 
 		return like != null;
 	}
 
 	public void likeEvent(Activity activity, EventModel event, ImageView like) {
 		if (this.like == null){
-			LikeModel likeModel = new LikeModel(event.getCategory(), event.getTitle(), event.getUserId());
+			LikeModel likeModel = new LikeModel(event.getCategory(), event.getTitle(), FirebaseController.getInstance().getUserId());
 			likeModel.setDocName("liked-" + new Random().nextInt(1000));
 
 			likeDao.save(likeModel);
@@ -36,7 +36,7 @@ public class LikesController {
 			this.like = likeModel;
 			changeIconLike(like, activity);
 		}else {
-			LikeModel likeModel = new LikeModel(event.getCategory(), event.getTitle(), event.getUserId());
+			LikeModel likeModel = new LikeModel(event.getCategory(), event.getTitle(), FirebaseController.getInstance().getUserId());
 			likeModel.setDocName("liked-" + new Random().nextInt(1000));
 
 			likeDao.delete(likeModel);

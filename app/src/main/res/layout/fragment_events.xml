@@ -61,14 +61,6 @@
                             android:textColor="@color/greySecondary"
                             tools:text="Filter" />
 
-                        <TextView
-                            android:id="@+id/textCurrentSortBy"
-                            style="@style/AppTheme.Caption"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/sorted_by_rating"
-                            android:textColor="@color/greyDisabled" />
-
                     </LinearLayout>
 
                     <ImageView
@@ -112,18 +104,17 @@
             android:layout_below="@+id/filterBarContainer"
             android:background="@drawable/bg_shadow" />
 
-        <!-- Empty list (pizza guy) view -->
+        <!-- Empty list view -->
         <LinearLayout
             android:id="@+id/viewEmpty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/filterBarContainer"
             android:layout_alignParentBottom="true"
-            android:layout_below="@+id/toolbar"
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="gone"
-            tools:visibility="gone">
+            android:visibility="gone">
 
             <TextView
                 style="@style/AppTheme.Body1"

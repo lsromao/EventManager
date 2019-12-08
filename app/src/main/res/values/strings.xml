@@ -37,11 +37,11 @@
     <string name="header_filters">Filter</string>
     <string name="search">Search</string>
 
-    <string name="sort_by_rating">Sort by Rating</string>
+    <string name="sort_by_newest">Sort by Newest</string>
+    <string name="sort_by_oldest">Sort by Oldest</string>
     <string name="sort_by_my_events">Sort by My Events</string>
-    <string name="sort_by_price">Sort by Price</string>
 
-    <string name="sorted_by_rating">sorted by rating</string>
+    <string name="sorted_by_newest">sorted by newest</string>
     <string name="sorted_by_my_events">sorted by my events</string>
     <string name="sorted_by_date">sorted by start date</string>
 
@@ -50,6 +50,7 @@
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
     <string name="message_no_results">Oops, couldn\'t find any results\nthat matched your filter</string>
+    <string name="message_no_comments">Oops, couldn\'t find any comments!\nBe the first in the comments!</string>
     <string name="submit">Submit</string>
     <string name="filter_add_review">Add review</string>
     <string name="title_activity_event">EventActivity</string>

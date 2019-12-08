@@ -26,7 +26,7 @@ public class CommentAdapter extends FirestoreRecyclerAdapter<CommentModel, Comme
 	 */
 	public CommentAdapter(@NonNull FirestoreRecyclerOptions<CommentModel> options, Activity activity) {
 		super(options);
-		//this.activity=activity;
+		this.activity=activity;
 
 	}
 
@@ -45,6 +45,6 @@ public class CommentAdapter extends FirestoreRecyclerAdapter<CommentModel, Comme
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comment,
 				parent, false);
 
-		return new CommentViewHolder(view);
+		return new CommentViewHolder(view, activity);
 	}
 }
