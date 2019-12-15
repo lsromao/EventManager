@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.uni.lu.eventmanager">
+    package="com.uni.lu.micseventmanager">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA" />
@@ -22,19 +22,19 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDfXCxIe_vA2APaofzjGWi_9jKoFmXhE4I" />
+            android:value="AIzaSyCaBqLu_GlF_qcIpm-plxo-mmxFUcZ_pGo" />
 
-        <activity android:name=".activities.RegisterActivity"
+        <activity android:name="com.uni.lu.micseventmanager.activities.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTask"/>
-        <activity android:name=".activities.EventActivity"
+        <activity android:name="com.uni.lu.micseventmanager.activities.EventActivity"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity
-            android:name=".activities.ProfileActivity"
+            android:name="com.uni.lu.micseventmanager.activities.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.LoginActivity"
+            android:name="com.uni.lu.micseventmanager.activities.LoginActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

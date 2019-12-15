@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/nav_events"
-        android:name="com.uni.lu.eventmanager.activities.fragments.EventsFragment"
+        android:name="com.uni.lu.micseventmanager.activities.fragments.EventsFragment"
         android:label="@string/menu_events"
         tools:layout="@layout/fragment_events" />
 
     <fragment
         android:id="@+id/nav_add_event"
-        android:name="com.uni.lu.eventmanager.activities.fragments.AddEventsFragment"
+        android:name="com.uni.lu.micseventmanager.activities.fragments.AddEventsFragment"
         android:label="@string/menu_add_event"
         tools:layout="@layout/fragment_add_event" />
 
     <fragment
         android:id="@+id/nav_profile"
-        android:name="com.uni.lu.eventmanager.activities.fragments.ProfileFragment"
+        android:name="com.uni.lu.micseventmanager.activities.fragments.ProfileFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_profile" />
 
