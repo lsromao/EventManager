@@ -1,21 +1,17 @@
 apply plugin: 'com.android.application'
 
-repositories {
-    mavenCentral()
-    maven { url 'https://maven.google.com' }
-
-}
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.uni.lu.eventmanager"
+        applicationId "com.uni.lu.micseventmanager"
         minSdkVersion 24
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments clearPackageData: 'true'
     }
     buildTypes {
         release {
@@ -35,9 +31,32 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.navigation:navigation-fragment:2.1.0'
     implementation 'androidx.navigation:navigation-ui:2.1.0'
+
+    // Dependencies for local unit tests
     testImplementation 'junit:junit:4.12'
+
+    // Core library
+    androidTestImplementation 'androidx.test:core:1.2.0'
+
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+
+    // Assertions
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.ext:truth:1.2.0'
+    androidTestImplementation 'com.google.truth:truth:0.42'
+
+    // Espresso dependencies
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-web:3.2.0'
+    androidTestImplementation 'androidx.test.espresso.idling:idling-concurrent:3.2.0'
+
+    //Mockito
+    implementation 'org.mockito:mockito-core:2.19.0'
 
     //Firebase
     implementation 'com.google.firebase:firebase-analytics:17.2.1'
@@ -70,6 +89,10 @@ dependencies {
     annotationProcessor 'com.android.support:support-annotations:28.0.0'
 
     implementation 'br.com.simplepass:loading-button-android:1.14.0'
+
+    implementation 'com.google.truth:truth:0.42'
+    implementation 'org.checkerframework:checker-compat-qual:2.5.2'
+
 
 }
 

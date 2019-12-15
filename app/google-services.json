@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "1092952934738",
-    "firebase_url": "https://misc-eventmanager.firebaseio.com",
-    "project_id": "misc-eventmanager",
-    "storage_bucket": "misc-eventmanager.appspot.com"
+    "project_number": "11470596392",
+    "firebase_url": "https://eventmanager-misc.firebaseio.com",
+    "project_id": "eventmanager-misc",
+    "storage_bucket": "eventmanager-misc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1092952934738:android:562863c143aa4725dd928b",
+        "mobilesdk_app_id": "1:11470596392:android:75908f04aa8be92708881d",
         "android_client_info": {
-          "package_name": "com.uni.lu.eventmanager"
+          "package_name": "com.uni.lu.micseventmanager"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1092952934738-lhpu10bml93heu4kr9k2dm3693a4d42h.apps.googleusercontent.com",
+          "client_id": "11470596392-ogg85oq2o1roof5su7p4cp0f8q5i5v7u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.uni.lu.eventmanager",
-            "certificate_hash": "e1bdc8e4fcc778856d8ec93eda88809329f0311b"
+            "package_name": "com.uni.lu.micseventmanager",
+            "certificate_hash": "f49b38eef3e934c026b668967f3cdf2ee4caccb0"
           }
         },
         {
-          "client_id": "1092952934738-m1n4oo0aoh4s1i8bk6hubnko1jestnjb.apps.googleusercontent.com",
+          "client_id": "11470596392-llutj018ku6mg97lolhmoa7dldneoosc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDfXCxIe_vA2APaofzjGWi_9jKoFmXhE4I"
+          "current_key": "AIzaSyCaBqLu_GlF_qcIpm-plxo-mmxFUcZ_pGo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1092952934738-m1n4oo0aoh4s1i8bk6hubnko1jestnjb.apps.googleusercontent.com",
+              "client_id": "11470596392-llutj018ku6mg97lolhmoa7dldneoosc.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
