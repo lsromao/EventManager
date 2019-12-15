@@ -1,11 +1,5 @@
 package com.uni.lu.micseventmanager.controller;
 
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -15,8 +9,6 @@ import com.uni.lu.micseventmanager.util.Gallery;
 import java.util.Random;
 
 public class FireStorageController {
-
-	private static final String TAG = "StorageReference Event";
 
 	private StorageReference storageRef;
 
@@ -30,19 +22,11 @@ public class FireStorageController {
 
 		event.setUriCover(eventCoverRef.toString());
 
-		eventCoverRef.putFile(gallery.getUrlTemp())
-				.addOnFailureListener(new OnFailureListener() {
-					@Override
-					public void onFailure(@NonNull Exception exception) {
-						Log.w(TAG, "saveCoverPicture:failure", exception);
+		UploadTask task = eventCoverRef.putFile(gallery.getUrlTemp());
 
-					}
-				}).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-			@Override
-			public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-				Log.w(TAG, "saveCoverPicture:success");
-			}
-		});
+		while (!task.isSuccessful()){
+
+		}
 
 		return event;
 	}
@@ -51,19 +35,12 @@ public class FireStorageController {
 		StorageReference profileCoverRef = storageRef.child(
 				"profile_pictures/" + FirebaseController.getInstance().getUserId() + new Random().nextInt(6000));
 
-		profileCoverRef.putFile(gallery.getUrlTemp())
-				.addOnFailureListener(new OnFailureListener() {
-					@Override
-					public void onFailure(@NonNull Exception exception) {
-						Log.w(TAG, "saveProfilePic:failure", exception);
+		UploadTask task = profileCoverRef.putFile(gallery.getUrlTemp());
 
-					}
-				}).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-			@Override
-			public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-				Log.w(TAG, "saveProfilePic:success");
-			}
-		});
+		while(!task.isSuccessful()){
+
+
+		}
 
 		return profileCoverRef.toString();
 	}
